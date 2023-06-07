@@ -5,7 +5,7 @@ from django.core.validators import RegexValidator, MinValueValidator
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
-from backend.customer.services.managers import CustomUserManager
+from .. customer.services.managers import CustomUserManager
 
 phone_regex = RegexValidator(
     regex=r'^\+?1?\d{9,15}$',
