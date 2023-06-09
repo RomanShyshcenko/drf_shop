@@ -1,7 +1,9 @@
-from django.test import SimpleTestCase
+from django.test import TestCase
+from django.urls import resolve, reverse
 
 
-class TestUrls(SimpleTestCase):
+class TestUrls(TestCase):
 
     def test_create_user_url(self):
-        assert 1 == 2
+        url = reverse('create_user')
+        print(resolve(url))
