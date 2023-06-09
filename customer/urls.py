@@ -8,7 +8,7 @@ from . import views
 
 
 urlpatterns = [
-    path('user/create/', views.RegisterClientView.as_view()),
+    path('user/create/', views.RegisterClientView.as_view(), name='create_user'),
     path('user/get/', views.RetrieveUserView.as_view(), name='get_user'),
     path('user/update/', views.UpdateFirstOrLastNameView.as_view(), name='update_first_last_name'),
     path('user/delete', views.DestroyUserView.as_view(), name='delete_user_and_all_relationship'),

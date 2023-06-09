@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
-from backend.customer import serializers
-from backend.customer.models import User, UserAddress, PhoneNumber
+from customer import serializers
+from customer.models import User, UserAddress, PhoneNumber
 
 
 class UpdateUserAPIView(UpdateAPIView):
@@ -15,11 +15,11 @@ class UpdateUserAPIView(UpdateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = User
 
-    def get_object(self):
+    def get_object(self) -> User:
         user_id = self.request.user.id
         return self.queryset.objects.get(id=user_id)
 
-    def update(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs) -> Response:
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data)
 
@@ -30,10 +30,10 @@ class UpdateUserAPIView(UpdateAPIView):
             return Response({"message": "failed", "details": serializer.errors})
 
 
-def get_user(user_id):
+def get_user(user_id: str) -> dict:
     user = User.objects.get(id=user_id)
-    address = UserAddress.objects.get(user=user_id)
-    phone_number = PhoneNumber.objects.get(user=user_id)
+    address = UserAddress.objects.get(user=user)
+    phone_number = PhoneNumber.objects.get(user=user)
 
     return {
         "id": user.id,
@@ -46,7 +46,7 @@ def get_user(user_id):
     }
 
 
-def get_client_by_email(email):
+def get_client_by_email(email: str) -> dict:
     """filtering client by email"""
     if email:
         client = User.objects.get(

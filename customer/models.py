@@ -1,16 +1,20 @@
 import uuid
-import bcrypt
 
-from django.core.validators import RegexValidator, MinValueValidator
+from django.contrib.auth.hashers import check_password
+from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
-from .. customer.services.managers import CustomUserManager
+from customer.services.managers import CustomUserManager
 
 phone_regex = RegexValidator(
     regex=r'^\+?1?\d{9,15}$',
     message="Phone number must be entered in the "
             "format: '+999999999'. Up to 15 digits allowed."
+)
+password_regex = RegexValidator(
+    regex=r'^.{8,}$',
+    message='Password too short'
 )
 
 
@@ -30,7 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     password = models.CharField(
         max_length=256,
-        validators=[MinValueValidator(8)],
+        validators=[password_regex],
         blank=True
     )
 
@@ -47,8 +51,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-    def verify_password(self, raw_password):
-        return bcrypt.checkpw(raw_password, self.password.encode('utf8'))
+    def verify_password(self, raw_password: str) -> bool:
+        return check_password(raw_password, self.password)
 
     class Meta:
         db_table = 'user'

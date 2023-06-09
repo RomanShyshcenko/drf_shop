@@ -9,20 +9,15 @@ from rest_framework import permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
-from backend.customer.services.client_service import UpdateUserAPIView, get_user
-from backend.customer import serializers
-from backend.customer.models import User, UserAddress, PhoneNumber
+from customer.services.client_service import UpdateUserAPIView, get_user
+from customer import serializers
+from customer.models import User, UserAddress, PhoneNumber
 
 
 class RegisterClientView(CreateAPIView):
     """Create User with email and password field"""
     serializer_class = serializers.RegisterUserSerializer
     authentication_classes = ()
-
-    def perform_create(self, serializer):
-        user = serializer.save()
-        UserAddress.objects.create(user_id=user)
-        PhoneNumber.objects.create(user=user)
 
     def post(self, request, *args, **kwargs):
         self.create(request, *args, **kwargs)

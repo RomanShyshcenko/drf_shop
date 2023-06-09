@@ -1,8 +1,7 @@
 from rest_framework import serializers
 from django.core.validators import MinValueValidator
 from rest_framework import status
-from backend.customer.models import User, UserAddress
-from django.contrib.auth.hashers import check_password
+from customer.models import User, UserAddress, password_regex
 
 
 class UserAddressSerializer(serializers.ModelSerializer):
@@ -30,28 +29,29 @@ class RetrieveUserSerializer(serializers.Serializer):
 class RegisterUserSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=120)
     password = serializers.CharField(
-        max_length=55, validators=[MinValueValidator],
+        max_length=55, validators=[password_regex],
     )
     confirm_password = serializers.CharField(
-        validators=[MinValueValidator], max_length=55,
-        required=False
+        validators=[password_regex], max_length=55,
+        write_only=True, required=True
     )
 
     def validate(self, data):
-        if data['password'] != data['confirm_password']:
-            raise serializers.ValidationError('Pleas enter your password correct 2 times')
+        if data.get('password') != data.get('confirm_password'):
+            raise serializers.ValidationError("Pleas confirm your password")
         return data
 
     def create(self, validated_data):
         try:
             user = User.objects.create_user(
-                email=validated_data['email'],
-            ).set_password(
-                validated_data['password']
+                email=validated_data.pop('email'),
+                password=validated_data.pop('password')
             )
         except Exception as e:
-            raise serializers.ValidationError(detail={"massage": "User already exist", "error": e},
-                                              code=status.HTTP_400_BAD_REQUEST)
+            raise serializers.ValidationError(
+                detail={"massage": "User already exist", "error": e},
+                code=status.HTTP_400_BAD_REQUEST
+            )
         return user
 
 
@@ -67,28 +67,34 @@ class UpdateFirstOrLastNameUserSerializer(serializers.Serializer):
 
 
 class ChangePasswordSerializer(serializers.Serializer):
-    old_password = serializers.CharField()
-    new_password = serializers.CharField()
-    confirm_password = serializers.CharField()
+    old_password = serializers.CharField(
+        max_length=55, write_only=True,
+        required=True
+    )
+    new_password = serializers.CharField(
+        validators=[password_regex], max_length=55,
+        write_only=True, required=True
+    )
+    confirm_password = serializers.CharField(
+        validators=[password_regex], max_length=55,
+        write_only=True, required=True
+    )
 
     def validate(self, data):
-        new_password = data['new_password']
-        old_password = self.instance.password
-        if len(new_password) < 8:
-            raise serializers.ValidationError("new password length mast be > 8")
+        new_password = data.get('new_password')
 
-        elif not check_password(data['old_password'], old_password):
+        if not self.instance.verify_password(data.get('old_password')):
             raise serializers.ValidationError('Pleas correctly enter your old password')
 
-        elif check_password(new_password, old_password):
+        elif self.instance.verify_password(new_password):
             raise serializers.ValidationError('New password cannot match old')
 
-        elif new_password != data['confirm_password']:
+        elif new_password != data.get('confirm_password'):
             raise serializers.ValidationError("Passwords doesn't match")
         return data
 
     def update(self, instance, validated_data):
-        instance.set_password(validated_data.get('new_password'))
+        instance.set_password(validated_data.pop('new_password'))
         instance.save()
         return instance
 
