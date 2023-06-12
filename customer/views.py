@@ -28,7 +28,7 @@ class RetrieveUserView(RetrieveAPIView):
     """Retrieve User by JWT Authentication"""
     authentication_classes = (JWTAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = serializers.RetrieveUserSerializer
+    serializer_class = serializers.UserSerializer
 
     def get_object(self):
         """Get user"""
@@ -36,22 +36,14 @@ class RetrieveUserView(RetrieveAPIView):
         return get_user(user_id=user_id)
 
 
-class UpdateFirstOrLastNameView(UpdateUserAPIView):
-    """Create or update first_name or/and last_name fields"""
-    serializer_class = serializers.UpdateFirstOrLastNameUserSerializer
+class UpdateUserView(UpdateUserAPIView):
+    """Create or update user first_name, last_name and address fields"""
+    serializer_class = serializers.UserSerializer
 
 
 class ChangePasswordView(UpdateUserAPIView):
     """Change User password"""
     serializer_class = serializers.ChangePasswordSerializer
-
-
-class ChangeEmailView(UpdateUserAPIView):
-    serializer_class = serializers.UpdateUserEmaiSerializer
-
-
-class ForgetEmailView(UpdateUserAPIView):
-    pass
 
 
 class DestroyUserView(DestroyAPIView):
@@ -61,9 +53,4 @@ class DestroyUserView(DestroyAPIView):
     def get_object(self):
         user_id = self.request.user.id
         return User.objects.filter(id=user_id)
-
-
-
-
-
 
