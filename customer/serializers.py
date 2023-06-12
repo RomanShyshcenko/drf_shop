@@ -1,40 +1,70 @@
 from rest_framework import serializers
-from django.core.validators import MinValueValidator
 from rest_framework import status
+from rest_framework.validators import UniqueValidator
+
 from customer.models import User, UserAddress, password_regex
 
 
 class UserAddressSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = UserAddress
-        fields = ('city', 'street_address', 'apartment_address', 'postal_code')
+        fields = ('city', 'street_address', 'apartment_address', 'postal_code', )
 
 
 class PhoneNumberSerializer(serializers.Serializer):
     phone_number = serializers.CharField(required=False)
     is_verified = serializers.BooleanField()
 
+    def update(self, instance, validated_data):
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
+        instance.save()
 
-class RetrieveUserSerializer(serializers.Serializer):
-    id = serializers.UUIDField()
-    email = serializers.EmailField(read_only=True)
-    is_confirmed_email = serializers.BooleanField(read_only=True)
-    first_name = serializers.CharField(required=False)
-    last_name = serializers.CharField(required=False)
-    phone_number = PhoneNumberSerializer()
+        return instance
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    phone_number = PhoneNumberSerializer(read_only=True)
     address = UserAddressSerializer()
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'address', 'phone_number']
+        read_only_fields = ['id', 'is_confirmed_email', 'email']
+
+    def update(self, instance, validated_data):
+        address_data = validated_data.pop('address')
+        address = instance.address.first()  # Get the first Address instance
+
+        # update user data
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.save()
+
+        # update address data
+        if address_data and address:
+            address.city = address_data.get('city', address.city)
+            address.street_address = address_data.get('street_address', address.street_address)
+            address.apartment_address = address_data.get('apartment_address', address.apartment_address)
+            address.postal_code = address_data.get('postal_code', address.postal_code)
+            address.save()
+
+        return instance
 
 
 class RegisterUserSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=120)
-    password = serializers.CharField(
-        max_length=55, validators=[password_regex],
-    )
+    password = serializers.CharField(max_length=55, validators=[password_regex])
     confirm_password = serializers.CharField(
         validators=[password_regex], max_length=55,
         write_only=True, required=True
     )
+
+    def validate_email(self, value):
+        if value and User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("User already exists!")
+        # You need to return the value in after validation.
+        return value
 
     def validate(self, data):
         if data.get('password') != data.get('confirm_password'):
@@ -42,22 +72,20 @@ class RegisterUserSerializer(serializers.Serializer):
         return data
 
     def create(self, validated_data):
-        try:
-            user = User.objects.create_user(
-                email=validated_data.pop('email'),
-                password=validated_data.pop('password')
-            )
-        except Exception as e:
-            raise serializers.ValidationError(
-                detail={"massage": "User already exist", "error": e},
-                code=status.HTTP_400_BAD_REQUEST
-            )
+
+        user = User.objects.create_user(
+            email=validated_data.get('email'),
+            password=validated_data.get('password')
+        )
+
         return user
 
 
 class UpdateFirstOrLastNameUserSerializer(serializers.Serializer):
     first_name = serializers.CharField(required=True)
     last_name = serializers.CharField(required=True)
+    phone_number = PhoneNumberSerializer()
+    address = UserAddressSerializer()
 
     def update(self, instance, validated_data):
         instance.first_name = validated_data.get('first_name', instance.first_name)
