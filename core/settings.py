@@ -43,11 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # External Packages
     'django_rest_passwordreset',
     'rest_framework',
     'django_filters',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -59,6 +61,7 @@ INSTALLED_APPS = [
     # Internal Apps
     'customer.apps.CustomerConfig'
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -162,6 +165,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
