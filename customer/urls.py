@@ -10,7 +10,7 @@ from . import views
 urlpatterns = [
     path('user/create/', views.RegisterClientView.as_view(), name='create_user'),
     path('user/get/', views.RetrieveUserView.as_view(), name='get_user'),
-    path('user/update/', views.UpdateFirstOrLastNameView.as_view(), name='update_first_last_name'),
+    path('user/update/', views.UpdateUserView.as_view(), name='update_user'),
     path('user/delete', views.DestroyUserView.as_view(), name='delete_user_and_all_relationship'),
 
     path('user/change-password/', views.ChangePasswordView.as_view(), name='change_password'),
