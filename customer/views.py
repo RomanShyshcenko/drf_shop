@@ -49,6 +49,11 @@ class ChangePasswordView(UpdateUserAPIView):
     serializer_class = serializers.ChangePasswordSerializer
 
 
+class ChangeEmail(UpdateUserAPIView):
+    """Change User email with setting is_confirmed_email to False"""
+    serializer_class = serializers.ChangeUserEmaiSerializer
+
+
 class DestroyUserView(DestroyAPIView):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)

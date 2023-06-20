@@ -29,7 +29,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'address', 'phone_number']
+        fields = ['id', 'email', 'first_name', 'last_name', 'address', 'phone_number']
         read_only_fields = ['id', 'is_confirmed_email', 'email']
 
     def update(self, instance, validated_data):
@@ -127,5 +127,19 @@ class ChangePasswordSerializer(serializers.Serializer):
         return instance
 
 
-class UpdateUserEmaiSerializer(serializers.Serializer):
+class ChangeUserEmaiSerializer(serializers.Serializer):
     email = serializers.EmailField()
+
+    def validate(self, data):
+        email = data.get('email')
+
+        if email == self.instance.email:
+            raise serializers.ValidationError("new email can't math old")
+
+        return data
+
+    def update(self, instance, validated_data):
+        instance.email = validated_data.pop('email')
+        instance.is_confirmed_email = False
+        instance.save()
+        return instance

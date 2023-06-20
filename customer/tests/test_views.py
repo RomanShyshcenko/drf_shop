@@ -22,6 +22,7 @@ class TestUserViews(TestCase):
         self.get_user_url = reverse('get_user')
         self.token_url = reverse('token_obtain_pair')
         self.update_user_url = reverse('update_user')
+        self.change_email_url = reverse('change_email')
         self.token = AccessToken.for_user(self.user)
 
     def test_register_user_view(self):
@@ -113,8 +114,25 @@ class TestUserViews(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
+    def test_email_update(self):
+        data = {
+            "email": "example@gmail.com"
+        }
 
+        response = self.client.put(
+            self.change_email_url,
+            data=data,
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Bearer {str(self.token)}"
+        )
 
+        try:
+            User.objects.get(email="example@gmail.com", is_confirmed_email=False)
+            is_user_exist = True
+        except User.DoesNotExist:
+            is_user_exist = False
 
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(is_user_exist, True)
 
 

@@ -19,6 +19,8 @@ urlpatterns = [
     path('user/email/send-verification/', views.SendEmailVerification.as_view(), name='send_email_verification'),
     path('user/email/verification/', views.EmailVerification.as_view(), name='email_verification'),
 
+    path('user/email/change/', views.ChangeEmail.as_view(), name='change_email'),
+
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
