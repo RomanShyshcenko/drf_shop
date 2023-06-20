@@ -14,7 +14,10 @@ urlpatterns = [
     path('user/delete', views.DestroyUserView.as_view(), name='delete_user_and_all_relationship'),
 
     path('user/change-password/', views.ChangePasswordView.as_view(), name='change_password'),
-    path('password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
+    path('user/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
+
+    path('user/email/send-verification/', views.SendEmailVerification.as_view(), name='send_email_verification'),
+    path('user/email/verification/', views.EmailVerification.as_view(), name='email_verification'),
 
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
