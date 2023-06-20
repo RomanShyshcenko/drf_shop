@@ -50,13 +50,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
 
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-
-    'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.apple',
-    'allauth.socialaccount.providers.facebook',
 
     # Internal Apps
     'customer.apps.CustomerConfig'
@@ -140,9 +133,6 @@ PASSWORD_HASHERS = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 
@@ -166,9 +156,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-SITE_ID = 1
-LOGIN_REDIRECT_URL = '/'
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -186,8 +173,8 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=int(os.environ.get("ACCESS_TOKEN_LIFETIME"))),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=int(os.environ.get("REFRESH_TOKEN_LIFETIME"))),
     "ROTATE_REFRESH_TOKENS": False,
-    "BLACKLIST_AFTER_ROTATION": False,
-    "UPDATE_LAST_LOGIN": False,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": True,
 
     "ALGORITHM": os.environ.get("ALGORITHM"),
     "SIGNING_KEY": os.environ.get("SECRET_KEY"),
