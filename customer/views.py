@@ -1,17 +1,20 @@
+from django.contrib.auth.tokens import default_token_generator
+from django.shortcuts import get_object_or_404
+from rest_framework import permissions
 from rest_framework import status
-from rest_framework.response import Response
 from rest_framework.generics import (
     CreateAPIView,
     RetrieveAPIView,
     DestroyAPIView,
 )
-from rest_framework import permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-
-from customer.services.client_service import UpdateUserAPIView, get_user
 from customer import serializers
-from customer.models import User, UserAddress, PhoneNumber
+from customer.models import User
+from customer.services.client_service import UpdateUserAPIView, get_user
+from customer.services import email_service
 
 
 class RegisterClientView(CreateAPIView):
@@ -54,3 +57,35 @@ class DestroyUserView(DestroyAPIView):
         user_id = self.request.user.id
         return User.objects.filter(id=user_id)
 
+
+class SendEmailVerification(APIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        user = self.request.user
+        return email_service.send_verification_email(user)
+
+
+class EmailVerification(APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def get(self, request):
+        user_id = self.request.query_params.get('user_id', '')
+        confirmation_token = self.request.query_params.get('confirmation_token', '')
+        try:
+            user = User.objects.get(id=user_id)
+        except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+
+        if user.is_confirmed_email:
+            return Response('Email has already been verified.', status=status.HTTP_400_BAD_REQUEST)
+
+        if default_token_generator.check_token(user, confirmation_token):
+            user.is_confirmed_email = True
+            user.save()
+            return Response('Email successfully confirmed')
+
+        return Response('Token is invalid or expired. Please request another confirmation email by signing in.',
+                        status=status.HTTP_400_BAD_REQUEST)
