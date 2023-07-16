@@ -1,5 +1,5 @@
 from django.contrib.auth.tokens import default_token_generator
-from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework.generics import (
@@ -12,9 +12,10 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from customer import serializers
-from customer.models import User
 from customer.services.client_service import UpdateUserAPIView, get_user
 from customer.services import email_service
+
+User = get_user_model()
 
 
 class RegisterClientView(CreateAPIView):

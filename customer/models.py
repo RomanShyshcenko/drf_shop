@@ -38,10 +38,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True
     )
 
-    date_joined = models.DateTimeField(auto_now_add=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_confirmed_email = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = "email"
 
@@ -55,12 +57,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         return check_password(raw_password, self.password)
 
     class Meta:
-        db_table = 'user'
-        ordering = ('-date_joined',)
+        db_table = 'users'
+        ordering = ('-created_at',)
 
 
-class PhoneNumber(models.Model):
-    user = models.ForeignKey(
+class PhoneNumbers(models.Model):
+    user_id = models.OneToOneField(
         User, related_name='phone',
         on_delete=models.CASCADE
     )
@@ -77,15 +79,15 @@ class PhoneNumber(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user_id
+        return self.phone_number
 
     class Meta:
         ordering = ('-created_at', )
-        db_table = 'phone_number'
+        db_table = 'phone_numbers'
 
 
-class UserAddress(models.Model):
-    user = models.ForeignKey(User, related_name='address', on_delete=models.CASCADE)
+class UserAddresses(models.Model):
+    user_id = models.OneToOneField(User, related_name='address', on_delete=models.CASCADE)
 
     city = models.CharField(max_length=100)
     street_address = models.CharField(max_length=100)
@@ -100,7 +102,7 @@ class UserAddress(models.Model):
 
     class Meta:
         ordering = ('-created_at', )
-        db_table = 'address'
+        db_table = 'addresses'
 
 
 

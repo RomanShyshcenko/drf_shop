@@ -1,13 +1,14 @@
 from rest_framework import serializers
-from rest_framework import status
-from rest_framework.validators import UniqueValidator
+from django.contrib.auth import get_user_model
 
-from customer.models import User, UserAddress, password_regex
+from customer.models import UserAddresses, password_regex
+
+User = get_user_model()
 
 
 class UserAddressSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserAddress
+        model = UserAddresses
         fields = ('city', 'street_address', 'apartment_address', 'postal_code', )
 
 
@@ -16,7 +17,10 @@ class PhoneNumberSerializer(serializers.Serializer):
     is_verified = serializers.BooleanField()
 
     def update(self, instance, validated_data):
-        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
+        instance.phone_number = validated_data.get(
+            'phone_number', instance.phone_number
+        )
+        instance.is_verified = False
         instance.save()
 
         return instance
@@ -34,7 +38,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         address_data = validated_data.pop('address')
-        address = instance.address.first()  # Get the first Address instance
+        address = instance.address  # Get the first Address instance
 
         # update user data
         instance.first_name = validated_data.get('first_name', instance.first_name)

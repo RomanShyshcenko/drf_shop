@@ -1,3 +1,5 @@
+from django.contrib.auth import get_user_model
+
 from rest_framework import status
 from rest_framework.generics import UpdateAPIView
 from rest_framework import permissions
@@ -6,7 +8,9 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 from customer import serializers
-from customer.models import User, UserAddress, PhoneNumber
+from customer.models import UserAddresses, PhoneNumbers
+
+User = get_user_model()
 
 
 class UpdateUserAPIView(UpdateAPIView):
@@ -32,8 +36,8 @@ class UpdateUserAPIView(UpdateAPIView):
 
 def get_user(user_id: str) -> dict:
     user = User.objects.get(id=user_id)
-    address = UserAddress.objects.get(user=user)
-    phone_number = PhoneNumber.objects.get(user=user)
+    address = UserAddresses.objects.get(user_id=user)
+    phone_number = PhoneNumbers.objects.get(user_id=user)
 
     return {
         "id": user.id,
@@ -54,7 +58,7 @@ def get_client_by_email(email: str) -> dict:
             is_active=True, email=email
             )
         if client:
-            serializer = serializers.RetrieveUserSerializer(client)
+            serializer = serializers.UserSerializer(client)
             return {'customer': serializer.data, 'status': status.HTTP_200_OK}
         return {
             'message': f'Account with this email {email} doesnt exist',

@@ -1,22 +1,23 @@
 from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django_rest_passwordreset.signals import reset_password_token_created
 
-from customer.models import User, UserAddress, PhoneNumber
+from customer.models import UserAddresses, PhoneNumbers, User as User
 
 
 @receiver(post_save, sender=User)
 def create_user_address(sender, instance, created, *args, **kwargs):
     if created:
-        UserAddress.objects.create(user=instance)
+        UserAddresses.objects.create(user_id=instance)
 
 
 @receiver(post_save, sender=User)
 def create_user_phone_number(sender, instance, created, *args, **kwargs):
     if created:
-        PhoneNumber.objects.create(user=instance)
+        PhoneNumbers.objects.create(user_id=instance)
 
 
 @receiver(reset_password_token_created)

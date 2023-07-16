@@ -52,7 +52,8 @@ INSTALLED_APPS = [
 
 
     # Internal Apps
-    'customer.apps.CustomerConfig'
+    'customer.apps.CustomerConfig',
+    'product.apps.ProductConfig',
 ]
 
 

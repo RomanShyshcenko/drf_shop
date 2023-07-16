@@ -1,13 +1,12 @@
 import json
-import jwt
 
 from django.test import TestCase
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
-
 from rest_framework_simplejwt.tokens import AccessToken
 
-from customer.models import User, UserAddress, PhoneNumber
+User = get_user_model()
 
 
 class TestUserViews(TestCase):
