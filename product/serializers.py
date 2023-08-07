@@ -1,4 +1,5 @@
 from django.utils import timezone
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, Serializer
 
 from product.models import Product, Category, SubCategory
@@ -46,9 +47,22 @@ class CategorySerializer(ModelSerializer):
         return category
 
 
-class DisableCategorySerializer(ModelSerializer):
+class CreateSubCategorySerializer(ModelSerializer):
     class Meta:
-        model = Category
+        model = SubCategory
+        fields = ('name', 'category_id')
+
+    def create(self, validated_data):
+        sub_category = SubCategory.objects.create(
+            name=validated_data.get('name'),
+            category_id=validated_data.get('category_id')
+        )
+        return sub_category
+
+
+class DisableSubCategorySerializer(ModelSerializer):
+    class Meta:
+        model = SubCategory
         fields = ('id', 'name', 'is_active')
         read_only_fields = ('id', 'name')
 
