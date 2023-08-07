@@ -7,7 +7,7 @@ class Category(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"category{self.name}, is_active={self.is_active}"
+        return f"category{self.name}, is_active={self.is_active}, id={self.id}"
 
     class Meta:
         ordering = ('-created_at', )
