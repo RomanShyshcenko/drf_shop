@@ -5,15 +5,17 @@ from rest_framework.generics import (
     UpdateAPIView
 )
 from rest_framework.response import Response
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, ValidationError
 
 from product.models import Category, SubCategory
 from product.permission import IsStaffOrSuperuserPermission
 from product import serializers
+from product.services.category_services import get_object_by_name, ActivateOrDeactivateCategoryAPIView
 
 
 class CreateCategory(CreateAPIView):
     authentication_classes = ()
+    permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.CategorySerializer
 
     def post(self, request, *args, **kwargs):
@@ -37,21 +39,48 @@ class CategoryDisableSubcategoriesView(UpdateAPIView):
 
     def get_object(self):
         name = self.request.data.get('name')
-        try:
-            if name:
-                return self.get_queryset().objects.get(name=self.request.data.get('name'))
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        except Category.DoesNotExist:
-            raise NotFound(detail='Category does not exist')
+        detail = 'Category does not exist'
+        return get_object_by_name(name=name, model=self.queryset, detail=detail)
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
+        if not instance.is_active:
+            raise ValidationError(detail={'message': 'Category already disabled!'}, code=status.HTTP_400_BAD_REQUEST)
         serializer = self.get_serializer(instance, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         if not instance.is_active:
             self.disable_category_and_subcategories(instance)
         return Response(serializer.data)
+
+
+class ActivateSubCategoriesOfConcreteCategoryView(ActivateOrDeactivateCategoryAPIView):
+    serializer_class = serializers.ActivateSubCategoriesOfConcreteCategorySerializer
+    queryset = Category
+
+    def put(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+
+        response_data = serializer.update(instance, serializer.validated_data)
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
+
+class ActivateCategoryWithoutSubCategoriesView(ActivateOrDeactivateCategoryAPIView):
+    serializer_class = serializers.CategoryActivateSerializer
+    queryset = Category
+
+
+class DisableSubCategoryView(ActivateOrDeactivateCategoryAPIView):
+    serializer_class = serializers.SubCategoryDisableSerializer
+    queryset = SubCategory
+
+
+class ActivateSubCategoryView(ActivateOrDeactivateCategoryAPIView):
+    serializer_class = serializers.SubCategoryActivateSerializer
+    queryset = SubCategory
 
 
 class CreateSubCategory(CreateAPIView):
@@ -64,35 +93,9 @@ class CreateSubCategory(CreateAPIView):
         try:
             Category.objects.get(id=cat_id)
         except Category.DoesNotExist:
-            return Response(
-                status=status.HTTP_400_BAD_REQUEST,
-                data={'message': f'Parent category with id:({cat_id}) does not exist'})
+            raise ValidationError(code=status.HTTP_400_BAD_REQUEST,
+                                  detail={'message': f'Parent category with id:({cat_id}) does not exist'})
 
         self.create(request, *args, **kwargs)
         return Response(status=status.HTTP_201_CREATED, headers=self.headers)
-
-
-class DisableSubCategoryView(UpdateAPIView):
-    authentication_classes = ()
-    permission_classes = (IsStaffOrSuperuserPermission,)
-    serializer_class = serializers.DisableSubCategorySerializer
-    queryset = SubCategory
-
-    def get_object(self):
-        name = self.request.data.get('name')
-        try:
-            if name:
-                return self.get_queryset().objects.get(name=self.request.data.get('name'))
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        except SubCategory.DoesNotExist:
-            raise NotFound(detail='Category does not exist')
-
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        if not instance.is_active:
-            return Response(data={'message': 'Category already disabled!'}, status=status.HTTP_400_BAD_REQUEST)
-        serializer = self.get_serializer(instance, request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
