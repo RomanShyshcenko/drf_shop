@@ -20,6 +20,7 @@ class TestCategoryViews(APITestCase):
         # urls
         cls.create_category_url = reverse('create_category')
         cls.full_disable_category_url = reverse('disable_category_and_subcategories')
+        cls.activate_category_without_sub_category_url = reverse('enable_category_without_subcategories')
         # models
         Category.objects.create(name="Test Category")
         SubCategory.objects.create(category_id=Category.objects.get(name='Test Category'), name='Test SubCategory')
@@ -29,6 +30,7 @@ class TestCategoryViews(APITestCase):
 
     def test_create_category_with_valid_data(self):
         response = self.client.post(self.create_category_url, {'name': 'Test'})
+
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Category.objects.count(), 2)
         self.assertEqual(Category.objects.get(name='Test').name, 'Test')
@@ -41,7 +43,8 @@ class TestCategoryViews(APITestCase):
 
     def test_full_disable_category_with_valid_data(self):
         response = self.client.put(
-            self.full_disable_category_url, {'name': 'Test Category', 'is_active': False}
+            self.full_disable_category_url,
+            {'name': 'Test Category', 'is_active': False}
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertFalse(Category.objects.get(name='Test Category').is_active)
@@ -49,9 +52,41 @@ class TestCategoryViews(APITestCase):
 
     def test_full_disable_category_with_invalid_data(self):
         response = self.client.put(
-            self.full_disable_category_url, {'is_active': 'invalid_value'})
+            self.full_disable_category_url,
+            {'is_active': 'invalid_value'}
+        )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertTrue(Category.objects.get(name="Test Category").is_active)
+
+    def test_activate_category_with_valid_data(self):
+        cat = Category.objects.get(name='Test Category')
+        cat.is_active = False
+        cat.save()
+        response = self.client.put(
+            self.activate_category_without_sub_category_url,
+            {'name': 'Test Category', 'is_active': True}
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(Category.objects.get(name="Test Category").is_active)
+
+    def test_activate_category_with_invalid_data(self):
+        cat = Category.objects.get(name='Test Category')
+        cat.is_active = False
+        cat.save()
+
+        response_400 = self.client.put(
+            self.activate_category_without_sub_category_url,
+            {'name': 'Test Category', 'is_active': '8'}
+        )
+        response_404 = self.client.put(
+            self.activate_category_without_sub_category_url,
+            {'name': '123', 'is_activa': True}
+        )
+
+        self.assertEqual(response_400.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(Category.objects.get(name="Test Category").is_active)
+        self.assertEqual(response_404.status_code, status.HTTP_404_NOT_FOUND)
 
 
 class TestSubCategoryView(APITestCase):
@@ -66,6 +101,9 @@ class TestSubCategoryView(APITestCase):
         )
         cls.sub_category_create_url = reverse('create_sub_category')
         cls.sub_category_disable_url = reverse('disable_sub_category')
+        cls.sub_category_activate_url = reverse('enable_sub_category')
+        cls.activate_sub_categories_of_concrete_category_url = reverse(
+            'activate_sub_categories_of_concrete_category')
 
     def setUp(self) -> None:
         self.client.force_authenticate(user=self.user)
@@ -104,3 +142,54 @@ class TestSubCategoryView(APITestCase):
         self.assertEqual(response_invalid_type.status_code, 400)
         self.assertEqual(response_invalid_name.status_code, 404)
         self.assertEqual(response_sub_category_already_disabled.status_code, 400)
+
+    def test_activate_sub_category_with_valid_data(self):
+        self.sub_category.is_active = False
+        self.sub_category.save()
+        response = self.client.put(
+            path=self.sub_category_activate_url,
+            data={'name': 'test', 'is_active': True}
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(SubCategory.objects.get(name='test').is_active)
+
+    def test_activate_sub_category_with_invalid_data(self):
+        response_400 = self.client.put(
+            path=self.sub_category_activate_url,
+            data={'name': 'test', 'is_active': '21'}
+        )
+        response_404 = self.client.put(
+            path=self.sub_category_activate_url,
+            data={'name': 'testd', 'is_active': True}
+        )
+
+        self.assertEqual(response_400.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response_404.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_activate_sub_categories_of_concrete_category_with_valid_data(self):
+        SubCategory.objects.create(name='test1', category_id=self.category, is_active=False)
+        SubCategory.objects.create(name='test2', category_id=self.category, is_active=False)
+        response = self.client.put(
+            path=self.activate_sub_categories_of_concrete_category_url,
+            data={'name': "Test Category", 'is_active': True}
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        list_of_cat = SubCategory.objects.filter(category_id=self.category)
+        for cat in list_of_cat:
+            self.assertTrue(cat.is_active)
+
+    def test_activate_sub_categories_of_concrete_category_with_invalid_data(self):
+        response_400 = self.client.put(
+            path=self.activate_sub_categories_of_concrete_category_url,
+            data={'name': "Test Category", 'is_active': '123'}
+        )
+        response_404 = self.client.put(
+            path=self.activate_sub_categories_of_concrete_category_url,
+            data={'name': "False", 'is_active': True}
+        )
+
+        self.assertEqual(response_400.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response_404.status_code, status.HTTP_404_NOT_FOUND)
