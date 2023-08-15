@@ -1,5 +1,5 @@
 from django.utils import timezone
-from rest_framework import serializers
+from rest_framework import serializers, status
 from rest_framework.serializers import ModelSerializer, Serializer
 
 from product.models import Product, Category, SubCategory
@@ -47,6 +47,20 @@ class CategorySerializer(ModelSerializer):
         return category
 
 
+class CategoryActivateSerializer(ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('name', 'is_active')
+
+    def validate(self, attrs):
+        if self.instance.is_active:
+            raise serializers.ValidationError(
+                detail="Category already activated!",
+                code=status.HTTP_400_BAD_REQUEST
+            )
+        return attrs
+
+
 class CreateSubCategorySerializer(ModelSerializer):
     class Meta:
         model = SubCategory
@@ -60,15 +74,86 @@ class CreateSubCategorySerializer(ModelSerializer):
         return sub_category
 
 
-class DisableSubCategorySerializer(ModelSerializer):
+class SubCategoryDisableSerializer(ModelSerializer):
     class Meta:
         model = SubCategory
-        fields = ('id', 'name', 'is_active')
+        fields = ('id', 'name', 'is_active', 'created_at')
         read_only_fields = ('id', 'name')
+
+    def validate(self, attrs):
+        if not self.instance.is_active:
+            raise serializers.ValidationError(
+                detail="Sub category already disabled!",
+                code=status.HTTP_400_BAD_REQUEST
+            )
+        return attrs
 
     def update(self, instance, validated_data):
         instance.is_active = validated_data.get('is_active', instance.is_active)
         instance.save()
 
         return instance
+
+
+class SubCategoryActivateSerializer(ModelSerializer):
+    class Meta:
+        model = SubCategory
+        fields = ('id', 'name', 'is_active', 'created_at')
+        read_only_fields = ('id', 'name')
+
+    def validate(self, attrs):
+        parent_cat = Category.objects.get(id=self.instance.category_id.id)
+        if not parent_cat.is_active:
+            raise serializers.ValidationError(
+                detail="You can't activate sub category with deactivated parent category",
+                code=status.HTTP_400_BAD_REQUEST
+            )
+        if self.instance.is_active:
+            raise serializers.ValidationError(
+                detail="Category already active!"
+            )
+        return attrs
+
+    def update(self, instance, validated_data):
+        instance.is_active = validated_data.get('is_active', instance.is_active)
+        instance.save()
+
+        return instance
+
+
+class ActivateSubCategoriesOfConcreteCategorySerializer(ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('id', 'name', 'is_active')
+        read_only_fields = ('id', 'name')
+
+    def validate(self, attrs):
+        if not self.instance.is_active:
+            raise serializers.ValidationError(
+                detail={
+                    'message': 'Parent category deactivated!. '
+                               'Pleas enable parent category.'
+                },
+                code=status.HTTP_400_BAD_REQUEST
+            )
+        return attrs
+
+    def update(self, instance, validated_data):
+        SubCategory.objects.filter(
+            category_id=instance.id,
+            is_active=False
+        ).update(is_active=True)
+
+        sub_categories = SubCategory.objects.filter(
+            category_id=instance.id,
+            is_active=True
+        )
+
+        sub_categories_list = [{'name': sub_cat.name, 'is_active': sub_cat.is_active} for sub_cat in sub_categories]
+
+        return {
+            'parent_category': instance.name,
+            'sub_categories': sub_categories_list
+        }
+
 
