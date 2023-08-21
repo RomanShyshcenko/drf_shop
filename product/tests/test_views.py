@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from product.models import Category, SubCategory
+from product.models import Category, SubCategory, Product
 
 User = get_user_model()
 
@@ -20,7 +20,7 @@ class TestCategoryViews(APITestCase):
         # urls
         cls.create_category_url = reverse('create_category')
         cls.full_disable_category_url = reverse('disable_category_and_subcategories')
-        cls.activate_category_without_sub_category_url = reverse('enable_category_without_subcategories')
+        cls.activate_category_without_sub_category_url = reverse('enable_category')
         # models
         Category.objects.create(name="Test Category")
         SubCategory.objects.create(category_id=Category.objects.get(name='Test Category'), name='Test SubCategory')
@@ -111,7 +111,7 @@ class TestSubCategoryView(APITestCase):
     def test_create_sub_category(self):
         response = self.client.post(
             path=self.sub_category_create_url,
-            data={'name': 'Test', 'category_id': 3})
+            data={'name': 'Test', 'category_id': 4})
 
         self.assertEqual(response.status_code, 201)
 
@@ -189,6 +189,140 @@ class TestSubCategoryView(APITestCase):
         response_404 = self.client.put(
             path=self.activate_sub_categories_of_concrete_category_url,
             data={'name': "False", 'is_active': True}
+        )
+
+        self.assertEqual(response_400.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response_404.status_code, status.HTTP_404_NOT_FOUND)
+
+
+class TestProductViews(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_staff(
+            email='test@email.com', password='12345678'
+        )
+        cls.create_product_url = reverse('create_product')
+        cls.is_active_status_url = reverse('is_active_status_product')
+        cls.update_product_url = reverse('update_product')
+        cls.get_product_url = reverse('product_detail')
+        cls.category = Category.objects.create(name="Test Category_product")
+        cls.sub_category = SubCategory.objects.create(
+            name='test_product', category_id=Category.objects.get(name='Test Category_product')
+        )
+        cls.product = Product.objects.create(
+            category_id=SubCategory.objects.get(name="test_product"),
+            name='Test', brand='brand', description='description')
+
+    def setUp(self) -> None:
+        self.client.force_authenticate(user=self.user)
+
+    def test_create_product_with_valid_data(self):
+        response = self.client.post(
+            path=self.create_product_url,
+            data={
+                "category_id": 2,
+                "name": 'product',
+                "brand": 'brand',
+                "description": 'description',
+            }
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Product.objects.count(), 2)
+
+    def test_create_product_with_invalid_data(self):
+        response_invalid_type = self.client.post(
+            path=self.create_product_url,
+            data={
+                "category_id": False,
+                "name": 'product',
+                "brand": 'brand',
+                "description": 'description',
+            }
+        )
+        response_no_data = self.client.post(
+            path=self.create_product_url,
+            data={}
+        )
+
+        self.assertEqual(response_invalid_type.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response_no_data.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_is_active_status_with_valid_data(self):
+        response_deactivate = self.client.put(
+            path=self.is_active_status_url,
+            data={
+                'id': 1,
+                'is_active': False
+            }
+        )
+
+        self.assertFalse(Product.objects.get(id=1).is_active)
+        self.assertEqual(response_deactivate.status_code, status.HTTP_200_OK)
+
+        self.product.is_active = False
+        self.product.save()
+        response_activate = self.client.put(
+            path=self.is_active_status_url,
+            data={
+                'id': 1,
+                'is_active': True
+            }
+        )
+
+        self.assertEqual(response_activate.status_code, status.HTTP_200_OK)
+        self.assertTrue(Product.objects.get(id=1).is_active)
+
+    def test_update_product_with_valid_data(self):
+        response = self.client.put(
+            path=self.update_product_url,
+            data={
+                "id": 1,
+                "name": "Iphone 10",
+                "brand": "Samsung",
+                "description": "New Iphone!",
+            }
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Product.objects.get(id=1).brand, "Samsung")
+
+    def test_update_product_with_invalid_data(self):
+        response_400 = self.client.put(
+            path=self.update_product_url,
+            data={
+                "id": False,
+                "name": "Iphone 10",
+                "brand": "Samsung",
+                "description": "New Iphone!",
+            }
+        )
+        response_404 = self.client.put(
+            path=self.update_product_url,
+            data={
+                "id": 1234,
+                "name": "Iphone 10",
+                "brand": "Samsung",
+                "description": "New Iphone!",
+            }
+        )
+        self.assertEqual(response_400.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response_404.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertNotEqual(Product.objects.get(id=1).brand, "Samsung")
+
+    def test_get_product_with_valid_data(self):
+        response = self.client.get(
+            path=self.get_product_url + "?id=1"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_product_with_invalid_data(self):
+        response_400 = self.client.get(
+            path=self.get_product_url + "?id=fjfjfjf"
+        )
+
+        response_404 = self.client.get(
+            path=self.get_product_url + "?id=21"
         )
 
         self.assertEqual(response_400.status_code, status.HTTP_400_BAD_REQUEST)
