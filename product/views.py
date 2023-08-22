@@ -14,6 +14,8 @@ from product.services.product_services import get_product_by_id
 
 
 class CreateProductView(CreateAPIView):
+    """Create product with 3 sets fields of product: name, brand and description.
+    Other fields set up automatically"""
     authentication_classes = ()
     permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.CreateProductSerializer
@@ -27,6 +29,7 @@ class CreateProductView(CreateAPIView):
 
 
 class UpdateProductView(UpdateAPIView):
+    """Can update from one to three fields of product: name, brand and description."""
     authentication_classes = ()
     permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.UpdateProductSerializer
@@ -54,6 +57,7 @@ class UpdateProductView(UpdateAPIView):
 
 
 class IsActivaStatusProductView(UpdateAPIView):
+    """Set-ups the is_active field by given is_active(True or False) field"""
     authentication_classes = ()
     permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.IsActiveStatusProductSerializer
@@ -65,6 +69,7 @@ class IsActivaStatusProductView(UpdateAPIView):
 
 
 class GetProduct(RetrieveAPIView):
+    """Just retrieve product by id"""
     authentication_classes = ()
     permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.GetProductSerializer
@@ -92,6 +97,7 @@ class CreateCategory(CreateAPIView):
 
 
 class CategoryDisableSubcategoriesView(UpdateAPIView):
+    """Disable Category with all SubCategories"""
     authentication_classes = ()
     permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.CategorySerializer
