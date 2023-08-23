@@ -39,7 +39,8 @@ class Product(models.Model):
     name = models.CharField(max_length=155)
     brand = models.CharField(max_length=155)
     description = models.TextField(max_length=1000)
-    price = models.PositiveIntegerField(verbose_name='Price in UA', default=0)
+    price = models.DecimalField(decimal_places=2, max_digits=10, verbose_name='Price in UAH', default=0)
+    quantity = models.IntegerField(default=1)
 
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)

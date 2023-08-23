@@ -224,6 +224,7 @@ class TestProductViews(APITestCase):
                 "name": 'product',
                 "brand": 'brand',
                 "price": 1000,
+                "quantity": 20,
                 "description": 'description',
             }
         )

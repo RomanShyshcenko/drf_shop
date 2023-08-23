@@ -10,7 +10,7 @@ class CreateProductSerializer(ModelSerializer):
         model = Product
         fields = (
             'id', 'category_id', 'name', 'brand', 'price',
-            'description', 'is_active', 'created_at'
+            'quantity', 'description', 'is_active', 'created_at'
         )
         read_only_fields = ('id', 'created_at')
 
@@ -35,6 +35,7 @@ class CreateProductSerializer(ModelSerializer):
             name=validated_data.get('name'),
             brand=validated_data.get('brand'),
             price=validated_data.get('price'),
+            quantity=validated_data.get('quantity'),
             description=validated_data.get('description'),
             category_id=validated_data.get('category_id')
         )
@@ -43,6 +44,8 @@ class CreateProductSerializer(ModelSerializer):
             "category_id": product.category_id,
             "name": product.name,
             "brand": product.brand,
+            "price": product.price,
+            "quantity": product.quantity,
             "description": product.description,
             "is_active": product.is_active,
             "created_at": product.created_at
@@ -55,7 +58,7 @@ class GetProductSerializer(ModelSerializer):
         model = Product
         fields = (
             'id', 'category_id', 'name', 'brand', 'price',
-            'description', 'is_active', 'created_at'
+            'quantity', 'description', 'is_active', 'created_at'
         )
         read_only_fields = fields
 
@@ -63,13 +66,14 @@ class GetProductSerializer(ModelSerializer):
 class UpdateProductSerializer(ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'name', 'brand', 'price', 'description')
+        fields = ('id', 'name', 'brand', 'price', 'quantity', 'description')
         read_only_fields = ('id', 'created_at')
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
         instance.brand = validated_data.get('brand', instance.brand)
         instance.price = validated_data.get('price', instance.price)
+        instance.quantity = validated_data.get('quantity', instance.quantity)
         instance.description = validated_data.get('description', instance.description)
         instance.save()
 
@@ -82,6 +86,7 @@ class UpdateProductSerializer(ModelSerializer):
             "name": instance.name,
             "brand": instance.brand,
             "price": instance.price,
+            "quantity": instance.quantity,
             "description": instance.description,
             "is_active": instance.is_active,
             "created_at": instance.created_at
