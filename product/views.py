@@ -71,7 +71,7 @@ class IsActivaStatusProductView(UpdateAPIView):
 class GetProduct(RetrieveAPIView):
     """Just retrieve product by id"""
     authentication_classes = ()
-    permission_classes = (IsStaffOrSuperuserPermission,)
+    permission_classes = ()
     serializer_class = serializers.GetProductSerializer
 
     def get_object(self):
