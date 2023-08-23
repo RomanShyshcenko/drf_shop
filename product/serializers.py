@@ -9,7 +9,7 @@ class CreateProductSerializer(ModelSerializer):
     class Meta:
         model = Product
         fields = (
-            'id', 'category_id', 'name', 'brand',
+            'id', 'category_id', 'name', 'brand', 'price',
             'description', 'is_active', 'created_at'
         )
         read_only_fields = ('id', 'created_at')
@@ -34,6 +34,7 @@ class CreateProductSerializer(ModelSerializer):
         product = Product.objects.create(
             name=validated_data.get('name'),
             brand=validated_data.get('brand'),
+            price=validated_data.get('price'),
             description=validated_data.get('description'),
             category_id=validated_data.get('category_id')
         )
@@ -53,7 +54,7 @@ class GetProductSerializer(ModelSerializer):
     class Meta:
         model = Product
         fields = (
-            'id', 'category_id', 'name', 'brand',
+            'id', 'category_id', 'name', 'brand', 'price',
             'description', 'is_active', 'created_at'
         )
         read_only_fields = fields
@@ -62,12 +63,13 @@ class GetProductSerializer(ModelSerializer):
 class UpdateProductSerializer(ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'name', 'brand', 'description')
+        fields = ('id', 'name', 'brand', 'price', 'description')
         read_only_fields = ('id', 'created_at')
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
         instance.brand = validated_data.get('brand', instance.brand)
+        instance.price = validated_data.get('price', instance.price)
         instance.description = validated_data.get('description', instance.description)
         instance.save()
 
@@ -79,6 +81,7 @@ class UpdateProductSerializer(ModelSerializer):
             },
             "name": instance.name,
             "brand": instance.brand,
+            "price": instance.price,
             "description": instance.description,
             "is_active": instance.is_active,
             "created_at": instance.created_at
@@ -90,8 +93,8 @@ class IsActiveStatusProductSerializer(ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'name', 'brand', 'description', 'is_active', 'updated_at', 'deleted_at')
-        read_only_fields = ('id', 'name', 'brand', 'description', 'updated_at')
+        fields = ('id', 'name', 'brand', 'price', 'description', 'is_active', 'updated_at', 'deleted_at')
+        read_only_fields = ('id', 'name', 'brand', 'price', 'description', 'updated_at')
 
     def validate(self, attrs):
         is_active = attrs.get('is_active')

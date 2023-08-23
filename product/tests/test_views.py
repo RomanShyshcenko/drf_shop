@@ -223,6 +223,7 @@ class TestProductViews(APITestCase):
                 "category_id": 2,
                 "name": 'product',
                 "brand": 'brand',
+                "price": 1000,
                 "description": 'description',
             }
         )

@@ -32,13 +32,14 @@ class SubCategory(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=155)
-    brand = models.CharField(max_length=155)
-    description = models.TextField(max_length=1000)
     category_id = models.ForeignKey(
         SubCategory, on_delete=models.CASCADE,
         related_name="products"
     )
+    name = models.CharField(max_length=155)
+    brand = models.CharField(max_length=155)
+    description = models.TextField(max_length=1000)
+    price = models.PositiveIntegerField(verbose_name='Price in UA', default=0)
 
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
