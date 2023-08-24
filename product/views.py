@@ -14,24 +14,22 @@ from product.services.product_services import get_product_by_id
 
 
 class CreateProductView(CreateAPIView):
-    """Create product with 3 sets fields of product: name, brand and description.
-    Other fields set up automatically"""
+    """
+    Create a new product with basic information.
+    Additional fields are set automatically.
+    """
     authentication_classes = ()
     permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.CreateProductSerializer
 
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
 
 class UpdateProductView(UpdateAPIView):
-    """Can update from one to three fields of product: name, brand and description."""
+    """
+    Update selected fields of a product.
+    Can update name, brand, description, price and quantity.
+    """
     authentication_classes = ()
-    permission_classes = (IsStaffOrSuperuserPermission,)
+    permission_classes = ()
     serializer_class = serializers.UpdateProductSerializer
     queryset = Product
 
@@ -40,24 +38,27 @@ class UpdateProductView(UpdateAPIView):
         try:
             int(product_id)
         except (ValueError, TypeError):
-            raise ValidationError(
-                code=status.HTTP_400_BAD_REQUEST,
-                detail={'error': {'id': f'You should give a number!'}}
-            )
+            raise ValidationError({
+                'error': {'id': f'You should give a number!'}
+            })
+
         return get_product_by_id(product_id)
 
     def put(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data)
         serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-        response_data = serializer.update(instance, serializer.validated_data)
-
+        response_data = serializer.to_representation(serializer.data)
         return Response(response_data, status=status.HTTP_200_OK)
 
 
 class IsActivaStatusProductView(UpdateAPIView):
-    """Set-ups the is_active field by given is_active(True or False) field"""
+    """
+    Update the is_active status of a product.
+    Can set is_active to True or False.
+    """
     authentication_classes = ()
     permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.IsActiveStatusProductSerializer
@@ -69,7 +70,9 @@ class IsActivaStatusProductView(UpdateAPIView):
 
 
 class GetProduct(RetrieveAPIView):
-    """Just retrieve product by id"""
+    """
+    Retrieve product details by ID.
+    """
     authentication_classes = ()
     permission_classes = ()
     serializer_class = serializers.GetProductSerializer
@@ -77,27 +80,36 @@ class GetProduct(RetrieveAPIView):
     def get_object(self):
         product_id = self.request.query_params.get('id')
         try:
-            int(product_id)
+            product_id = int(product_id)
         except (ValueError, TypeError):
             raise ValidationError(
-                code=status.HTTP_400_BAD_REQUEST,
-                detail={'error': {'id': f'You should give a number!'}}
+                {'id': 'ID should be a valid integer'}
             )
+
         return get_product_by_id(product_id)
 
 
 class CreateCategory(CreateAPIView):
+    """
+    Create a new category.
+    """
     authentication_classes = ()
     permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.CategorySerializer
 
     def post(self, request, *args, **kwargs):
-        self.create(request, *args, **kwargs)
-        return Response(status=status.HTTP_201_CREATED, headers=self.headers)
+        response = super().post(request, *args, **kwargs)
+        return Response(
+            response.data,
+            status=status.HTTP_201_CREATED,
+            headers=response.headers
+        )
 
 
 class CategoryDisableSubcategoriesView(UpdateAPIView):
-    """Disable Category with all SubCategories"""
+    """
+    Disable a category along with its subcategories.
+    """
     authentication_classes = ()
     permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.CategorySerializer
@@ -118,17 +130,24 @@ class CategoryDisableSubcategoriesView(UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
+
         if not instance.is_active:
-            raise ValidationError(detail={'message': 'Category already disabled!'}, code=status.HTTP_400_BAD_REQUEST)
+            raise ValidationError({'message': 'Category already disabled!'})
+
         serializer = self.get_serializer(instance, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+
         if not instance.is_active:
             self.disable_category_and_subcategories(instance)
+
         return Response(serializer.data)
 
 
 class ActivateSubCategoriesOfConcreteCategoryView(ActivateOrDeactivateCategoryAPIView):
+    """
+    Activate subcategories of a specific category.
+    """
     serializer_class = serializers.ActivateSubCategoriesOfConcreteCategorySerializer
     queryset = Category
 
@@ -164,11 +183,13 @@ class CreateSubCategory(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         cat_id = request.data.get('category_id')
+
         try:
             Category.objects.get(id=cat_id)
         except Category.DoesNotExist:
-            raise ValidationError(code=status.HTTP_400_BAD_REQUEST,
-                                  detail={'message': f'Parent category with id:({cat_id}) does not exist'})
+            raise ValidationError({
+                'message': f'Parent category with id:({cat_id}) does not exist'
+            })
 
         self.create(request, *args, **kwargs)
         return Response(status=status.HTTP_201_CREATED, headers=self.headers)

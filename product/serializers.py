@@ -58,21 +58,7 @@ class UpdateProductSerializer(ModelSerializer):
         instance.description = validated_data.get('description', instance.description)
         instance.save()
 
-        product = {
-            "id": instance.id,
-            "category_id": {
-                'id': instance.category_id.id,
-                'name': instance.category_id.name
-            },
-            "name": instance.name,
-            "brand": instance.brand,
-            "price": instance.price,
-            "quantity": instance.quantity,
-            "description": instance.description,
-            "is_active": instance.is_active,
-            "created_at": instance.created_at
-        }
-        return product
+        return instance
 
 
 class IsActiveStatusProductSerializer(ModelSerializer):

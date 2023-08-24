@@ -8,6 +8,6 @@ def get_product_by_id(product_id):
     try:
         if product_id:
             return Product.objects.get(id=product_id)
-        raise ValidationError(code=status.HTTP_400_BAD_REQUEST)
+        raise ValidationError()
     except Product.DoesNotExist:
         raise NotFound(detail="Product doesn't exist!")
