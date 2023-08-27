@@ -2,8 +2,7 @@ from rest_framework import status
 from rest_framework.exceptions import ValidationError, NotFound
 from rest_framework.generics import UpdateAPIView
 
-from product.models import SubCategory
-from product.permission import IsStaffOrSuperuserPermission
+from customer.permissions import IsStaffOrSuperuserPermission
 
 
 def get_object_by_name(name: str, model, detail: str):

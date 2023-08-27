@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
 from product.models import Category, SubCategory, Product
-from product.permission import IsStaffOrSuperuserPermission
+from customer.permissions import IsStaffOrSuperuserPermission
 from product import serializers
 from product.services.category_services import get_object_by_name, ActivateOrDeactivateCategoryAPIView
 from product.services.product_services import get_product_by_id
@@ -19,7 +19,7 @@ class CreateProductView(CreateAPIView):
     Additional fields are set automatically.
     """
     authentication_classes = ()
-    permission_classes = (IsStaffOrSuperuserPermission,)
+    permission_classes = ()
     serializer_class = serializers.CreateProductSerializer
 
 
@@ -94,7 +94,7 @@ class CreateCategory(CreateAPIView):
     Create a new category.
     """
     authentication_classes = ()
-    permission_classes = (IsStaffOrSuperuserPermission,)
+    permission_classes = ()
     serializer_class = serializers.CategorySerializer
 
     def post(self, request, *args, **kwargs):
@@ -111,7 +111,7 @@ class CategoryDisableSubcategoriesView(UpdateAPIView):
     Disable a category along with its subcategories.
     """
     authentication_classes = ()
-    permission_classes = (IsStaffOrSuperuserPermission,)
+    permission_classes = ()
     serializer_class = serializers.CategorySerializer
     queryset = Category
 
@@ -178,7 +178,7 @@ class ActivateSubCategoryView(ActivateOrDeactivateCategoryAPIView):
 
 class CreateSubCategory(CreateAPIView):
     authentication_classes = ()
-    permission_classes = (IsStaffOrSuperuserPermission,)
+    permission_classes = ()
     serializer_class = serializers.CreateSubCategorySerializer
 
     def post(self, request, *args, **kwargs):
