@@ -5,7 +5,9 @@ from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django_rest_passwordreset.signals import reset_password_token_created
 
-from customer.models import UserAddresses, PhoneNumbers, User as User
+from customer.models import UserAddresses, PhoneNumbers
+
+User = get_user_model()
 
 
 @receiver(post_save, sender=User)
