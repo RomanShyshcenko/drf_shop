@@ -4,7 +4,6 @@ from rest_framework.generics import (
     CreateAPIView, RetrieveAPIView,
     ListAPIView, UpdateAPIView
 )
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.pagination import PageNumberPagination
@@ -40,13 +39,6 @@ class UpdateProductView(UpdateAPIView):
 
     def get_object(self):
         product_id = self.request.data.get('id')
-        try:
-            product_id = int(product_id)
-        except (ValueError, TypeError):
-            raise ValidationError({
-                'error': {'id': f'You should give a number!'}
-            })
-
         return get_product_by_id(product_id)
 
     def put(self, request, *args, **kwargs):
@@ -84,13 +76,6 @@ class GetProduct(RetrieveAPIView):
 
     def get_object(self):
         product_id = self.request.query_params.get('id')
-        try:
-            product_id = int(product_id)
-        except (ValueError, TypeError):
-            raise ValidationError(
-                {'id': 'ID should be a valid integer'}
-            )
-
         return get_product_by_id(product_id)
 
 
@@ -112,10 +97,8 @@ class CreateCategory(CreateAPIView):
 
 
 class GetCategoryListView(ListAPIView):
-
     """
-    This class defines a view for listing products
-    with optional filtering and ordering.
+    This class retrieve list of categories.
     """
     authentication_classes = ()
     serializer_class = serializers.CategorySerializer
@@ -135,7 +118,7 @@ class CategoryDisableSubcategoriesView(UpdateAPIView):
         category.is_active = False
         category.save()
 
-        subcategories = SubCategory.objects.filter(category_id=category.pk, is_active=True)
+        subcategories = SubCategory.objects.filter(category=category.pk, is_active=True)
         for subcategory in subcategories:
             self.disable_category_and_subcategories(subcategory)
 
@@ -196,19 +179,6 @@ class CreateSubCategory(CreateAPIView):
     authentication_classes = ()
     permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.CreateSubCategorySerializer
-
-    def post(self, request, *args, **kwargs):
-        cat_id = request.data.get('category')
-
-        try:
-            Category.objects.get(id=cat_id)
-        except Category.DoesNotExist:
-            raise ValidationError({
-                'message': f'Parent category with id:({cat_id}) does not exist'
-            })
-
-        self.create(request, *args, **kwargs)
-        return Response(status=status.HTTP_201_CREATED, headers=self.headers)
 
 
 class ProductsListAPIView(ListAPIView):
