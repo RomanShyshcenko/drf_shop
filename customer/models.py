@@ -62,7 +62,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class PhoneNumbers(models.Model):
-    user_id = models.OneToOneField(
+    user = models.OneToOneField(
         User, related_name='phone',
         on_delete=models.CASCADE
     )
@@ -87,7 +87,7 @@ class PhoneNumbers(models.Model):
 
 
 class UserAddresses(models.Model):
-    user_id = models.OneToOneField(User, related_name='address', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, related_name='address', on_delete=models.CASCADE)
 
     city = models.CharField(max_length=100)
     street_address = models.CharField(max_length=100)
@@ -98,7 +98,7 @@ class UserAddresses(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user_id
+        return self.user
 
     class Meta:
         ordering = ('-created_at', )

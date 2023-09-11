@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 
 from rest_framework import status
@@ -36,8 +37,8 @@ class UpdateUserAPIView(UpdateAPIView):
 
 def get_user(user_id: str) -> dict:
     user = User.objects.get(id=user_id)
-    address = UserAddresses.objects.get(user_id=user)
-    phone_number = PhoneNumbers.objects.get(user_id=user)
+    address = UserAddresses.objects.get(user=user)
+    phone_number = PhoneNumbers.objects.get(user=user)
 
     return {
         "id": user.id,
@@ -53,17 +54,11 @@ def get_user(user_id: str) -> dict:
 def get_client_by_email(email: str) -> dict:
     """filtering client by email"""
     if email:
-        client = User.objects.get(
-            is_staff=False, is_superuser=False,
-            is_active=True, email=email
-            )
-        if client:
-            serializer = serializers.UserSerializer(client)
-            return {'customer': serializer.data, 'status': status.HTTP_200_OK}
-        return {
-            'message': f'Account with this email {email} doesnt exist',
-            'status': status.HTTP_404_NOT_FOUND
-        }
+        client = get_object_or_404(
+            User, is_staff=False, is_superuser=False,
+            is_active=True, email=email)
+        serializer = serializers.UserSerializer(client)
+        return {'customer': serializer.data, 'status': status.HTTP_200_OK}
     return {
         'message': 'Pleas enter the email',
         'status': status.HTTP_400_BAD_REQUEST

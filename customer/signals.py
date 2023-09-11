@@ -13,13 +13,13 @@ User = get_user_model()
 @receiver(post_save, sender=User)
 def create_user_address(sender, instance, created, *args, **kwargs):
     if created:
-        UserAddresses.objects.create(user_id=instance)
+        UserAddresses.objects.create(user=instance)
 
 
 @receiver(post_save, sender=User)
 def create_user_phone_number(sender, instance, created, *args, **kwargs):
     if created:
-        PhoneNumbers.objects.create(user_id=instance)
+        PhoneNumbers.objects.create(user=instance)
 
 
 @receiver(reset_password_token_created)
