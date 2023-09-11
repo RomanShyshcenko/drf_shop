@@ -85,19 +85,6 @@ class RegisterUserSerializer(serializers.Serializer):
         return user
 
 
-class UpdateFirstOrLastNameUserSerializer(serializers.Serializer):
-    first_name = serializers.CharField(required=True)
-    last_name = serializers.CharField(required=True)
-    phone_number = PhoneNumberSerializer()
-    address = UserAddressSerializer()
-
-    def update(self, instance, validated_data):
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.save()
-        return instance
-
-
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(
         max_length=55, write_only=True,
