@@ -9,13 +9,13 @@ class CreateProductSerializer(ModelSerializer):
     class Meta:
         model = Product
         fields = (
-            'id', 'category_id', 'name', 'brand', 'price',
+            'id', 'category', 'name', 'brand', 'price',
             'quantity', 'description', 'is_active', 'created_at'
         )
         read_only_fields = ('id', 'created_at')
 
     def validate(self, attrs):
-        cat_id = attrs.get('category_id').id
+        cat_id = attrs.get('category').id
         if not isinstance(cat_id, int):
             raise serializers.ValidationError(
                 {'error': {'category_id': f'You should give a number!'}}
@@ -38,7 +38,7 @@ class GetProductSerializer(ModelSerializer):
     class Meta:
         model = Product
         fields = (
-            'id', 'category_id', 'name', 'brand', 'price',
+            'id', 'category', 'name', 'brand', 'price',
             'quantity', 'description', 'is_active', 'created_at'
         )
         read_only_fields = fields
@@ -121,7 +121,7 @@ class CategoryActivateSerializer(ModelSerializer):
 class CreateSubCategorySerializer(ModelSerializer):
     class Meta:
         model = SubCategory
-        fields = ('name', 'category_id')
+        fields = ('name', 'category')
 
     def create(self, validated_data):
         sub_category = SubCategory.objects.create(**validated_data)
@@ -157,7 +157,7 @@ class SubCategoryActivateSerializer(ModelSerializer):
 
     def validate(self, attrs):
         # Retrieve the parent category
-        parent_cat = Category.objects.get(id=self.instance.category_id.id)
+        parent_cat = Category.objects.get(id=self.instance.category.id)
 
         # Check if the parent category is active
         if not parent_cat.is_active:
@@ -195,10 +195,10 @@ class ActivateSubCategoriesOfConcreteCategorySerializer(ModelSerializer):
 
     def update(self, instance, validated_data):
         # Activate inactive subcategories
-        SubCategory.objects.filter(category_id=instance.id,
+        SubCategory.objects.filter(category=instance.id,
                                    is_active=False).update(is_active=True)
         # Fetch and serialize activated subcategories
-        sub_categories = SubCategory.objects.filter(category_id=instance.id, is_active=True)
+        sub_categories = SubCategory.objects.filter(category=instance.id, is_active=True)
         sub_categories_list = [{'name': sub_cat.name, 'is_active': sub_cat.is_active}
                                for sub_cat in sub_categories]
 

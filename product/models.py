@@ -15,7 +15,7 @@ class Category(models.Model):
 
 
 class SubCategory(models.Model):
-    category_id = models.ForeignKey(
+    category = models.ForeignKey(
         Category, on_delete=models.CASCADE,
         related_name="sub_category"
     )
@@ -24,7 +24,7 @@ class SubCategory(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"sub_category={self.name}, parent_category={self.category_id.name}, is_active={self.is_active}"
+        return f"sub_category={self.name}, parent_category={self.category.name}, is_active={self.is_active}"
 
     class Meta:
         ordering = ('-created_at',)
@@ -32,7 +32,7 @@ class SubCategory(models.Model):
 
 
 class Product(models.Model):
-    category_id = models.ForeignKey(
+    category = models.ForeignKey(
         SubCategory, on_delete=models.CASCADE,
         related_name="products"
     )

@@ -23,7 +23,7 @@ class TestCategoryViews(APITestCase):
         cls.activate_category_without_sub_category_url = reverse('enable_category')
         # models
         Category.objects.create(name="Test Category")
-        SubCategory.objects.create(category_id=Category.objects.get(name='Test Category'), name='Test SubCategory')
+        SubCategory.objects.create(category=Category.objects.get(name='Test Category'), name='Test SubCategory')
 
     def setUp(self) -> None:
         self.client.force_authenticate(user=self.user)
@@ -97,7 +97,7 @@ class TestSubCategoryView(APITestCase):
         )
         cls.category = Category.objects.create(name="Test Category")
         cls.sub_category = SubCategory.objects.create(
-            name='test', category_id=Category.objects.get(name='Test Category')
+            name='test', category=Category.objects.get(name='Test Category')
         )
         cls.sub_category_create_url = reverse('create_sub_category')
         cls.sub_category_disable_url = reverse('disable_sub_category')
@@ -111,7 +111,7 @@ class TestSubCategoryView(APITestCase):
     def test_create_sub_category(self):
         response = self.client.post(
             path=self.sub_category_create_url,
-            data={'name': 'Test', 'category_id': 4})
+            data={'name': 'Test', 'category': 4})
 
         self.assertEqual(response.status_code, 201)
 
@@ -168,8 +168,8 @@ class TestSubCategoryView(APITestCase):
         self.assertEqual(response_404.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_activate_sub_categories_of_concrete_category_with_valid_data(self):
-        SubCategory.objects.create(name='test1', category_id=self.category, is_active=False)
-        SubCategory.objects.create(name='test2', category_id=self.category, is_active=False)
+        SubCategory.objects.create(name='test1', category=self.category, is_active=False)
+        SubCategory.objects.create(name='test2', category=self.category, is_active=False)
         response = self.client.put(
             path=self.activate_sub_categories_of_concrete_category_url,
             data={'name': "Test Category", 'is_active': True}
@@ -177,7 +177,7 @@ class TestSubCategoryView(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        list_of_cat = SubCategory.objects.filter(category_id=self.category)
+        list_of_cat = SubCategory.objects.filter(category=self.category)
         for cat in list_of_cat:
             self.assertTrue(cat.is_active)
 
@@ -207,10 +207,10 @@ class TestProductViews(APITestCase):
         cls.get_product_url = reverse('product_detail')
         cls.category = Category.objects.create(name="Test Category_product")
         cls.sub_category = SubCategory.objects.create(
-            name='test_product', category_id=Category.objects.get(name='Test Category_product')
+            name='test_product', category=Category.objects.get(name='Test Category_product')
         )
         cls.product = Product.objects.create(
-            category_id=SubCategory.objects.get(name="test_product"),
+            category=SubCategory.objects.get(name="test_product"),
             name='Test', brand='brand', description='description')
 
     def setUp(self) -> None:
@@ -220,7 +220,7 @@ class TestProductViews(APITestCase):
         response = self.client.post(
             path=self.create_product_url,
             data={
-                "category_id": 2,
+                "category": 2,
                 "name": 'product',
                 "brand": 'brand',
                 "price": 1000,
@@ -236,7 +236,7 @@ class TestProductViews(APITestCase):
         response_invalid_type = self.client.post(
             path=self.create_product_url,
             data={
-                "category_id": False,
+                "category": False,
                 "name": 'product',
                 "brand": 'brand',
                 "description": 'description',

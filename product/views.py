@@ -1,10 +1,15 @@
 from rest_framework import status
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.generics import (
     CreateAPIView, RetrieveAPIView,
     ListAPIView, UpdateAPIView
 )
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
+from rest_framework.pagination import PageNumberPagination
+
+from django_filters.rest_framework import DjangoFilterBackend
 
 from product.models import Category, SubCategory, Product
 from customer.permissions import IsStaffOrSuperuserPermission
@@ -36,7 +41,7 @@ class UpdateProductView(UpdateAPIView):
     def get_object(self):
         product_id = self.request.data.get('id')
         try:
-            int(product_id)
+            product_id = int(product_id)
         except (ValueError, TypeError):
             raise ValidationError({
                 'error': {'id': f'You should give a number!'}
@@ -94,7 +99,7 @@ class CreateCategory(CreateAPIView):
     Create a new category.
     """
     authentication_classes = ()
-    permission_classes = ()
+    permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.CategorySerializer
 
     def post(self, request, *args, **kwargs):
@@ -106,12 +111,23 @@ class CreateCategory(CreateAPIView):
         )
 
 
+class GetCategoryListView(ListAPIView):
+
+    """
+    This class defines a view for listing products
+    with optional filtering and ordering.
+    """
+    authentication_classes = ()
+    serializer_class = serializers.CategorySerializer
+    queryset = Category.objects.all()
+
+
 class CategoryDisableSubcategoriesView(UpdateAPIView):
     """
     Disable a category along with its subcategories.
     """
     authentication_classes = ()
-    permission_classes = ()
+    permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.CategorySerializer
     queryset = Category
 
@@ -178,11 +194,11 @@ class ActivateSubCategoryView(ActivateOrDeactivateCategoryAPIView):
 
 class CreateSubCategory(CreateAPIView):
     authentication_classes = ()
-    permission_classes = ()
+    permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.CreateSubCategorySerializer
 
     def post(self, request, *args, **kwargs):
-        cat_id = request.data.get('category_id')
+        cat_id = request.data.get('category')
 
         try:
             Category.objects.get(id=cat_id)
@@ -193,4 +209,22 @@ class CreateSubCategory(CreateAPIView):
 
         self.create(request, *args, **kwargs)
         return Response(status=status.HTTP_201_CREATED, headers=self.headers)
+
+
+class ProductsListAPIView(ListAPIView):
+    """
+    This class defines a view for listing products
+    with optional filtering and ordering.
+    """
+    authentication_classes = []
+    serializer_class = serializers.GetProductSerializer
+    pagination_class = PageNumberPagination
+    filter_backends = [OrderingFilter, DjangoFilterBackend, SearchFilter]
+    search_fields = ['name', 'description', 'brand']
+    filter_fields = ['name', 'brand', 'category_id__name']
+    ordering_fields = ['price']
+
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        return queryset
 
