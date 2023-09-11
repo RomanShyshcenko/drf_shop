@@ -23,10 +23,6 @@ class RegisterClientView(CreateAPIView):
     serializer_class = serializers.RegisterUserSerializer
     authentication_classes = ()
 
-    def post(self, request, *args, **kwargs):
-        self.create(request, *args, **kwargs)
-        return Response(status=status.HTTP_201_CREATED, headers=self.headers)
-
 
 class RetrieveUserView(RetrieveAPIView):
     """Retrieve User by JWT Authentication"""
