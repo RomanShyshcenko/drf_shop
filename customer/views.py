@@ -57,7 +57,7 @@ class DestroyUserView(DestroyAPIView):
 
     def get_object(self):
         user_id = self.request.user.id
-        return User.objects.filter(id=user_id)
+        return User.objects.get(id=user_id)
 
 
 class SendEmailVerification(APIView):

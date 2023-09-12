@@ -36,9 +36,9 @@ class UpdateUserAPIView(UpdateAPIView):
 
 
 def get_user(user_id: str) -> dict:
-    user = User.objects.get(id=user_id)
-    address = UserAddresses.objects.get(user=user)
-    phone_number = PhoneNumbers.objects.get(user=user)
+    user = User.objects.select_related('address', 'phone').get(id=user_id)
+    address = user.address
+    phone_number = user.phone
 
     return {
         "id": user.id,
@@ -49,18 +49,3 @@ def get_user(user_id: str) -> dict:
         "address": address,
         "phone_number": phone_number
     }
-
-
-def get_client_by_email(email: str) -> dict:
-    """filtering client by email"""
-    if email:
-        client = get_object_or_404(
-            User, is_staff=False, is_superuser=False,
-            is_active=True, email=email)
-        serializer = serializers.UserSerializer(client)
-        return {'customer': serializer.data, 'status': status.HTTP_200_OK}
-    return {
-        'message': 'Pleas enter the email',
-        'status': status.HTTP_400_BAD_REQUEST
-    }
-
