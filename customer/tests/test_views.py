@@ -25,73 +25,36 @@ class TestUserViews(TestCase):
         self.token = AccessToken.for_user(self.user)
 
     def test_register_user_view(self):
-        response = self.client.post(self.create_user_url, {
+        data = {
             "email": "example@gmail.com",
             "password": "12345678",
             "confirm_password": "12345678"
-        })
-
-        try:
-            is_user_created = User.objects.get(email="example@gmail.com")
-        except Exception as e:
-            is_user_created = False
-            print(e)
-
-        self.assertTrue(is_user_created)
-        self.assertEquals(response.status_code, 201)
+        }
+        response = self.client.post(self.create_user_url, data, format='json')
+        self.assertEqual(response.status_code, 201)
+        self.assertTrue(User.objects.filter(email=data['email']).exists())
 
     def test_error_register_user_view(self):
         url = self.create_user_url
-
-        no_data_response = self.client.post(url, {})
-        no_passwords_response = self.client.post(url, {
-            "email": "example@gmail.com",
-            "password": "",
-            "confirm_password": ""
-        })
-        invalid_email_response = self.client.post(url, {
-            "email": "example_gmail.com",
-            "password": "12345678",
-            "confirm_password": "12345678"
-        })
-        email_already_exist_response = self.client.post(url, {
-            "email": "test@email.com",
-            "password": "12345678",
-            "confirm_password": "12345678"
-        })
-        no_confirm_password_response = self.client.post(url, {
-            "email": "example@gmail.com",
-            "password": "12345678",
-            "confirm_password": ""
-        })
-        invalid_confirm_password_response = self.client.post(url, {
-            "email": "example@gmail.com",
-            "password": "12345678",
-            "confirm_password": "12345678999"
-        })
-
-        self.assertEquals(no_data_response.status_code, 400)
-        self.assertEquals(no_passwords_response.status_code, 400)
-        self.assertEquals(invalid_email_response.status_code, 400)
-        self.assertEquals(email_already_exist_response.status_code, 400)
-        self.assertEquals(no_confirm_password_response.status_code, 400)
-        self.assertEquals(invalid_confirm_password_response.status_code, 400)
+        invalid_data = [
+            {},  # No data
+            {"email": "example@gmail.com", "password": "", "confirm_password": ""},  # No passwords
+            {"email": "example_gmail.com", "password": "12345678", "confirm_password": "12345678"},  # Invalid email
+            {"email": "test@email.com", "password": "12345678", "confirm_password": "12345678"},  # Email already exists
+            {"email": "example@gmail.com", "password": "12345678", "confirm_password": ""},  # No confirm password
+            {"email": "example@gmail.com", "password": "12345678", "confirm_password": "12345678999"},  # Invalid confirm password
+        ]
+        for data in invalid_data:
+            response = self.client.post(url, data, format='json')
+            self.assertEqual(response.status_code, 400)
 
     def test_get_user_view(self):
-        # test get user with valid jwt access token
-        response = self.client.get(
-            HTTP_AUTHORIZATION=f"Bearer {str(self.token)}",
-            path=self.get_user_url
-        )
-        self.assertEquals(response.status_code, 200)
+        response = self.client.get(self.get_user_url, HTTP_AUTHORIZATION=f"Bearer {str(self.token)}")
+        self.assertEqual(response.status_code, 200)
 
     def test_error_get_user(self):
-        # test get user with invalid or expired jwt access token
-        response = self.client.get(
-            HTTP_AUTHORIZATION=f"Bearer {str(self.token) + 'boom'}",
-            path=self.get_user_url
-        )
-        self.assertEquals(response.status_code, 401)
+        response = self.client.get(self.get_user_url, HTTP_AUTHORIZATION=f"Bearer {str(self.token) + 'boom'}")
+        self.assertEqual(response.status_code, 401)
 
     def test_update_user(self):
         data = {
@@ -110,28 +73,17 @@ class TestUserViews(TestCase):
             content_type="application/json",
             HTTP_AUTHORIZATION=f"Bearer {str(self.token)}"
         )
-
         self.assertEqual(response.status_code, 200)
 
     def test_email_update(self):
         data = {
             "email": "example@gmail.com"
         }
-
         response = self.client.put(
             self.change_email_url,
-            data=data,
+            data=json.dumps(data),
             content_type="application/json",
             HTTP_AUTHORIZATION=f"Bearer {str(self.token)}"
         )
-
-        try:
-            User.objects.get(email="example@gmail.com", is_confirmed_email=False)
-            is_user_exist = True
-        except User.DoesNotExist:
-            is_user_exist = False
-
-        self.assertEquals(response.status_code, 200)
-        self.assertEquals(is_user_exist, True)
-
-
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(User.objects.filter(email=data['email'], is_confirmed_email=False).exists())
