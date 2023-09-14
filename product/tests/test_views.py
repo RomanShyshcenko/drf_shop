@@ -19,8 +19,7 @@ class TestCategoryViews(APITestCase):
         )
         # urls
         cls.create_category_url = reverse('create_category')
-        cls.full_disable_category_url = reverse('disable_category_and_subcategories')
-        cls.activate_category_without_sub_category_url = reverse('enable_category')
+        cls.update_status_category_url = reverse('update_status_category')
         # models
         Category.objects.create(name="Test Category")
         SubCategory.objects.create(category=Category.objects.get(name='Test Category'), name='Test SubCategory')
@@ -41,19 +40,19 @@ class TestCategoryViews(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(Category.objects.count(), 1)
 
-    def test_full_disable_category_with_valid_data(self):
+    def test_deactivate_category_with_valid_data(self):
         response = self.client.put(
-            self.full_disable_category_url,
+            self.update_status_category_url,
             {'name': 'Test Category', 'is_active': False}
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertFalse(Category.objects.get(name='Test Category').is_active)
         self.assertFalse(SubCategory.objects.get(name='Test SubCategory').is_active)
 
-    def test_full_disable_category_with_invalid_data(self):
+    def test_update_status_category_with_invalid_data(self):
         response = self.client.put(
-            self.full_disable_category_url,
-            {'is_active': 'invalid_value'}
+            self.update_status_category_url,
+            {'name': 'Test Category', 'is_active': 'invalid_value'}
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertTrue(Category.objects.get(name="Test Category").is_active)
@@ -63,7 +62,7 @@ class TestCategoryViews(APITestCase):
         cat.is_active = False
         cat.save()
         response = self.client.put(
-            self.activate_category_without_sub_category_url,
+            self.update_status_category_url,
             {'name': 'Test Category', 'is_active': True}
         )
 
@@ -76,11 +75,11 @@ class TestCategoryViews(APITestCase):
         cat.save()
 
         response_400 = self.client.put(
-            self.activate_category_without_sub_category_url,
+            self.update_status_category_url,
             {'name': 'Test Category', 'is_active': '8'}
         )
         response_404 = self.client.put(
-            self.activate_category_without_sub_category_url,
+            self.update_status_category_url,
             {'name': '123', 'is_activa': True}
         )
 
@@ -100,8 +99,7 @@ class TestSubCategoryView(APITestCase):
             name='test', category=Category.objects.get(name='Test Category')
         )
         cls.sub_category_create_url = reverse('create_sub_category')
-        cls.sub_category_disable_url = reverse('disable_sub_category')
-        cls.sub_category_activate_url = reverse('enable_sub_category')
+        cls.sub_category_update_status_url = reverse('update_status_sub_category')
         cls.activate_sub_categories_of_concrete_category_url = reverse(
             'activate_sub_categories_of_concrete_category')
 
@@ -117,25 +115,25 @@ class TestSubCategoryView(APITestCase):
 
     def test_disable_sub_category(self):
         response = self.client.put(
-            path=self.sub_category_disable_url,
+            path=self.sub_category_update_status_url,
             data={'name': 'test', 'is_active': False}
         )
 
         self.assertEqual(response.status_code, 200)
 
-    def test_disable_sub_category_with_invalid_data(self):
+    def test_update_status_sub_category_with_invalid_data(self):
         self.sub_category.is_active = False
         self.sub_category.save()
         response_invalid_type = self.client.put(
-            path=self.sub_category_disable_url,
+            path=self.sub_category_update_status_url,
             data={'name': 'test', 'is_active': '2'}
         )
         response_invalid_name = self.client.put(
-            path=self.sub_category_disable_url,
+            path=self.sub_category_update_status_url,
             data={'name': 1, 'is_active': False}
         )
         response_sub_category_already_disabled = self.client.put(
-            path=self.sub_category_disable_url,
+            path=self.sub_category_update_status_url,
             data={'name': 'test', 'is_active': False}
         )
 
@@ -147,29 +145,15 @@ class TestSubCategoryView(APITestCase):
         self.sub_category.is_active = False
         self.sub_category.save()
         response = self.client.put(
-            path=self.sub_category_activate_url,
+            path=self.sub_category_update_status_url,
             data={'name': 'test', 'is_active': True}
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(SubCategory.objects.get(name='test').is_active)
 
-    def test_activate_sub_category_with_invalid_data(self):
-        response_400 = self.client.put(
-            path=self.sub_category_activate_url,
-            data={'name': 'test', 'is_active': '21'}
-        )
-        response_404 = self.client.put(
-            path=self.sub_category_activate_url,
-            data={'name': 'testd', 'is_active': True}
-        )
-
-        self.assertEqual(response_400.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response_404.status_code, status.HTTP_404_NOT_FOUND)
-
     def test_activate_sub_categories_of_concrete_category_with_valid_data(self):
         SubCategory.objects.create(name='test1', category=self.category, is_active=False)
-        SubCategory.objects.create(name='test2', category=self.category, is_active=False)
         response = self.client.put(
             path=self.activate_sub_categories_of_concrete_category_url,
             data={'name': "Test Category", 'is_active': True}
