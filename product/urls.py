@@ -18,5 +18,4 @@ urlpatterns = [
          views.ActivateSubCategoriesOfConcreteCategoryView.as_view(),
          name='activate_sub_categories_of_concrete_category'
          ),
-    # path('sub_category/get/', views.GetSubCategoryView.as_view(), name='get_sub_category'),
 ]
