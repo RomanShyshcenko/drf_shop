@@ -14,21 +14,6 @@ class CreateProductSerializer(ModelSerializer):
         )
         read_only_fields = ('id', 'created_at')
 
-    def validate(self, attrs):
-        cat_id = attrs.get('category').id
-        if not isinstance(cat_id, int):
-            raise serializers.ValidationError(
-                {'error': {'category_id': f'You should give a number!'}}
-            )
-        try:
-            SubCategory.objects.get(id=cat_id)
-        except SubCategory.DoesNotExist:
-            raise serializers.ValidationError(
-                {'message': f'Category with id: {cat_id} does not exist!'}
-
-            )
-        return attrs
-
     def create(self, validated_data):
         product = Product.objects.create(**validated_data)
         return product
@@ -107,15 +92,32 @@ class CategorySerializer(ModelSerializer):
         return category
 
 
-class CategoryActivateSerializer(ModelSerializer):
+class UpdateStatusCategorySerializer(ModelSerializer):
     class Meta:
         model = Category
         fields = ('name', 'is_active')
 
     def validate(self, attrs):
-        if self.instance.is_active:
+        is_active = attrs.get('is_active')
+        instance_is_active = self.instance.is_active
+
+        if instance_is_active and is_active:
             raise serializers.ValidationError("Category already activated!")
+        if not instance_is_active and not is_active:
+            raise serializers.ValidationError("Category already disabled!")
+
         return attrs
+
+    def update(self, instance, validated_data):
+        is_active = validated_data.get('is_active')
+        instance.is_active = is_active
+
+        if not is_active:
+            # disable all active sub categories
+            instance.sub_category.filter(is_active=True).update(is_active=is_active)
+
+        instance.save()
+        return instance
 
 
 class CreateSubCategorySerializer(ModelSerializer):
@@ -128,54 +130,40 @@ class CreateSubCategorySerializer(ModelSerializer):
         return sub_category
 
 
-class SubCategoryDisableSerializer(ModelSerializer):
+class UpdateStatusSubCategorySerializer(ModelSerializer):
     class Meta:
         model = SubCategory
         fields = ('id', 'name', 'is_active', 'created_at')
         read_only_fields = ('id', 'name')
 
     def validate(self, attrs):
-        if not self.instance.is_active:
-            raise serializers.ValidationError("Sub category already disabled!")
-
-        return attrs
-
-    def update(self, instance, validated_data):
-        instance.is_active = validated_data.get('is_active', instance.is_active)
-        # Task:
-        # It should disable all products depends on this sub category.
-        instance.save()
-
-        return instance
-
-
-class SubCategoryActivateSerializer(ModelSerializer):
-    class Meta:
-        model = SubCategory
-        fields = ('id', 'name', 'is_active', 'created_at')
-        read_only_fields = ('id', 'name')
-
-    def validate(self, attrs):
-        # Retrieve the parent category
-        parent_cat = Category.objects.get(id=self.instance.category.id)
+        is_active = attrs.get('is_active')
+        instance_is_active = self.instance.is_active
+        parent_cat = self.instance.category
 
         # Check if the parent category is active
-        if not parent_cat.is_active:
-            raise serializers.ValidationError(
-                "You can't activate sub category with deactivated parent category",
-                status.HTTP_400_BAD_REQUEST)
+        if is_active and not parent_cat.is_active:
+            message = "You can't activate sub category with deactivated parent category"
+            raise serializers.ValidationError(message)
 
-        # Check if the subcategory is already active
-        if self.instance.is_active:
-            raise serializers.ValidationError(detail="Category already active!")
+        if instance_is_active and is_active:
+            message = "Sub category already activated!"
+            raise serializers.ValidationError(message)
+
+        if not instance_is_active and not is_active:
+            message = "Sub category already disabled!"
+            raise serializers.ValidationError(message)
 
         return attrs
 
     def update(self, instance, validated_data):
-        # Update the is_active field
-        instance.is_active = validated_data.get('is_active', instance.is_active)
-        instance.save()
+        is_active = validated_data.get('is_active')
+        instance.is_active = is_active
 
+        if not is_active:
+            instance.products.filter(is_active=True).update(is_active=is_active)
+
+        instance.save()
         return instance
 
 

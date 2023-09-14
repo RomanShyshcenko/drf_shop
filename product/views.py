@@ -7,13 +7,14 @@ from rest_framework.generics import (
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.pagination import PageNumberPagination
+from django.shortcuts import get_object_or_404
 
 from django_filters.rest_framework import DjangoFilterBackend
 
 from product.models import Category, SubCategory, Product
 from customer.permissions import IsStaffOrSuperuserPermission
 from product import serializers
-from product.services.category_services import get_object_by_name, ActivateOrDeactivateCategoryAPIView
+from product.services.category_services import ActivateOrDeactivateCategoryAPIView
 from product.services.product_services import get_product_by_id
 
 
@@ -23,7 +24,7 @@ class CreateProductView(CreateAPIView):
     Additional fields are set automatically.
     """
     authentication_classes = ()
-    permission_classes = ()
+    permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.CreateProductSerializer
 
 
@@ -33,7 +34,7 @@ class UpdateProductView(UpdateAPIView):
     Can update name, brand, description, price and quantity.
     """
     authentication_classes = ()
-    permission_classes = ()
+    permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.UpdateProductSerializer
     queryset = Product
 
@@ -124,8 +125,7 @@ class CategoryDisableSubcategoriesView(UpdateAPIView):
 
     def get_object(self):
         name = self.request.data.get('name')
-        detail = 'Category does not exist'
-        return get_object_by_name(name=name, model=self.queryset, detail=detail)
+        return get_object_or_404(self.queryset, name=name)
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -160,18 +160,20 @@ class ActivateSubCategoriesOfConcreteCategoryView(ActivateOrDeactivateCategoryAP
         return Response(response_data, status=status.HTTP_200_OK)
 
 
-class ActivateCategoryView(ActivateOrDeactivateCategoryAPIView):
-    serializer_class = serializers.CategoryActivateSerializer
+class UpdateStatusCategoryView(ActivateOrDeactivateCategoryAPIView):
+    """Update status of concrete category,
+    if category disabling along with related products.
+    """
+    serializer_class = serializers.UpdateStatusCategorySerializer
     queryset = Category
 
 
-class DisableSubCategoryView(ActivateOrDeactivateCategoryAPIView):
-    serializer_class = serializers.SubCategoryDisableSerializer
-    queryset = SubCategory
-
-
-class ActivateSubCategoryView(ActivateOrDeactivateCategoryAPIView):
-    serializer_class = serializers.SubCategoryActivateSerializer
+class UpdateStatusSubCategoryView(ActivateOrDeactivateCategoryAPIView):
+    """
+    Update status of concrete sub category,
+    if sub category disabling along with related products.
+    """
+    serializer_class = serializers.UpdateStatusSubCategorySerializer
     queryset = SubCategory
 
 
@@ -197,4 +199,3 @@ class ProductsListAPIView(ListAPIView):
     def get_queryset(self):
         queryset = Product.objects.all()
         return queryset
-

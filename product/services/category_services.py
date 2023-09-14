@@ -1,17 +1,7 @@
-from rest_framework import status
-from rest_framework.exceptions import ValidationError, NotFound
+from django.shortcuts import get_object_or_404
 from rest_framework.generics import UpdateAPIView
 
 from customer.permissions import IsStaffOrSuperuserPermission
-
-
-def get_object_by_name(name: str, model, detail: str):
-    try:
-        if name:
-            return model.objects.get(name=name)
-        raise ValidationError(code=status.HTTP_400_BAD_REQUEST)
-    except model.DoesNotExist:
-        raise NotFound(detail=detail)
 
 
 class ActivateOrDeactivateCategoryAPIView(UpdateAPIView):
@@ -20,5 +10,4 @@ class ActivateOrDeactivateCategoryAPIView(UpdateAPIView):
 
     def get_object(self):
         name = self.request.data.get('name')
-        detail = 'Category does not exist'
-        return get_object_by_name(name=name, detail=detail, model=self.queryset)
+        return get_object_or_404(self.queryset, name=name)
