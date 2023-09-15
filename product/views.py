@@ -88,14 +88,6 @@ class CreateCategory(CreateAPIView):
     permission_classes = (IsStaffOrSuperuserPermission,)
     serializer_class = serializers.CategorySerializer
 
-    def post(self, request, *args, **kwargs):
-        response = super().post(request, *args, **kwargs)
-        return Response(
-            response.data,
-            status=status.HTTP_201_CREATED,
-            headers=response.headers
-        )
-
 
 class GetCategoryListView(ListAPIView):
     """
