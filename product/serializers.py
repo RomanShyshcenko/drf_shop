@@ -167,7 +167,7 @@ class UpdateStatusSubCategorySerializer(ModelSerializer):
         return instance
 
 
-class ActivateSubCategoriesOfConcreteCategorySerializer(ModelSerializer):
+class ActivateSubCategoriesSerializer(ModelSerializer):
     class Meta:
         model = Category
         fields = ('id', 'name', 'is_active')

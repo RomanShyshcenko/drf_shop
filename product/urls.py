@@ -10,12 +10,12 @@ urlpatterns = [
     path('product/', views.ProductsListAPIView.as_view(), name='list_of_products'),
     # Category
     path('category/create/', views.CreateCategory.as_view(), name='create_category'),
-    path('category/update-status/', views.UpdateStatusCategoryView.as_view(), name='update_status_category'),
+    path('category/update-status/', views.UpdateStatusCategoryView.as_view(), name='update_category_status'),
     path('category/all/', views.GetCategoryListView.as_view(), name='get_category'),
     path('sub_category/create/', views.CreateSubCategory.as_view(), name='create_sub_category'),
-    path('sub_category/update-status/', views.UpdateStatusSubCategoryView.as_view(), name='update_status_sub_category'),
+    path('sub_category/update-status/',
+         views.UpdateStatusSubCategoryView.as_view(), name='update_sub_category_status'),
     path('sub_category/enable/all/',
-         views.ActivateSubCategoriesOfConcreteCategoryView.as_view(),
-         name='activate_sub_categories_of_concrete_category'
-         ),
+         views.ActivateSubCategoriesAPIView.as_view(),
+         name='activate_subcategories'),
 ]

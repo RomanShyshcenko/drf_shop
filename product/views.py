@@ -143,11 +143,11 @@ class CategoryDisableSubcategoriesView(UpdateAPIView):
         return Response(serializer.data)
 
 
-class ActivateSubCategoriesOfConcreteCategoryView(ActivateOrDeactivateCategoryAPIView):
+class ActivateSubCategoriesAPIView(ActivateOrDeactivateCategoryAPIView):
     """
     Activate subcategories of a specific category.
     """
-    serializer_class = serializers.ActivateSubCategoriesOfConcreteCategorySerializer
+    serializer_class = serializers.ActivateSubCategoriesSerializer
     queryset = Category
 
     def put(self, request, *args, **kwargs):
