@@ -2,11 +2,27 @@ from rest_framework.test import APITestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from rest_framework import status
-from rest_framework.test import APIClient
 
+from customer.tests.test_views import create_staff_user_test_data
 from product.models import Category, SubCategory, Product
 
 User = get_user_model()
+
+
+def create_category_test_data() -> Category:
+    return Category.objects.create(name="Test Category")
+
+
+def create_subcategory_test_data(category: Category) -> SubCategory:
+    return SubCategory.objects.create(category=category, name='Test SubCategory')
+
+
+def create_product_test_data(subcategory: SubCategory) -> Product:
+    return Product.objects.create(
+        name='Iphone 10', description='test',
+        price=1000, quantity=20, brand='Apple',
+        category=subcategory
+    )
 
 
 class TestCategoryViews(APITestCase):
@@ -20,8 +36,8 @@ class TestCategoryViews(APITestCase):
         cls.create_category_url = reverse('create_category')
         cls.update_category_status_url = reverse('update_category_status')
         # Create initial data
-        cls.category = Category.objects.create(name="Test Category")
-        cls.subcategory = SubCategory.objects.create(category=cls.category, name='Test SubCategory')
+        cls.category = create_category_test_data()
+        cls.subcategory = create_subcategory_test_data(cls.category)
 
     def setUp(self) -> None:
         # Authenticate the client with the staff user
@@ -41,13 +57,14 @@ class TestCategoryViews(APITestCase):
         self.assertEqual(Category.objects.count(), 1)
 
     def test_deactivate_category_with_valid_data(self):
+        cat_name = self.category.name
         response = self.client.put(
             self.update_category_status_url,
-            {'name': 'Test Category', 'is_active': False}
+            {'name': cat_name, 'is_active': False}
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertFalse(Category.objects.get(name='Test Category').is_active)
-        self.assertFalse(SubCategory.objects.get(name='Test SubCategory').is_active)
+        self.assertFalse(Category.objects.get(name=cat_name).is_active)
+        self.assertFalse(SubCategory.objects.get(name=self.subcategory.name).is_active)
 
     def test_update_status_category_with_invalid_data(self):
         response = self.client.put(
@@ -55,19 +72,19 @@ class TestCategoryViews(APITestCase):
             {'name': 'Test Category', 'is_active': 'invalid_value'}
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertTrue(Category.objects.get(name="Test Category").is_active)
+        self.assertTrue(Category.objects.get(name=self.category.name).is_active)
 
     def test_activate_category_with_valid_data(self):
-        cat = Category.objects.get(name='Test Category')
-        cat.is_active = False
-        cat.save()
+        cat_name = self.category.name
+        self.category.is_active = False
+        self.category.save()
         response = self.client.put(
             self.update_category_status_url,
-            {'name': 'Test Category', 'is_active': True}
+            {'name': cat_name, 'is_active': True}
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertTrue(Category.objects.get(name="Test Category").is_active)
+        self.assertTrue(Category.objects.get(name=cat_name).is_active)
 
     def test_activate_category_with_invalid_data(self):
         self.category.is_active = False
@@ -91,13 +108,10 @@ class TestCategoryViews(APITestCase):
 class TestSubCategoryView(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user = User.objects.create_staff(
-            email='staff@test.com', password='12345678'
-        )
-        cls.category = Category.objects.create(name="Test Category")
-        cls.sub_category = SubCategory.objects.create(
-            name='test', category=cls.category
-        )
+        cls.user = create_staff_user_test_data()
+        cls.category = create_category_test_data()
+        cls.sub_category = create_subcategory_test_data(cls.category)
+
         cls.create_sub_category_url = reverse('create_sub_category')
         cls.update_sub_category_status_url = reverse('update_sub_category_status')
         cls.activate_subcategories_url = reverse('activate_subcategories')
@@ -115,7 +129,7 @@ class TestSubCategoryView(APITestCase):
     def test_disable_sub_category(self):
         response = self.client.put(
             path=self.update_sub_category_status_url,
-            data={'name': 'test', 'is_active': False}
+            data={'name': self.sub_category.name, 'is_active': False}
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -125,7 +139,7 @@ class TestSubCategoryView(APITestCase):
 
         response_invalid_type = self.client.put(
             path=self.update_sub_category_status_url,
-            data={'name': 'test', 'is_active': '2'}
+            data={'name': self.sub_category.name, 'is_active': '2'}
         )
         response_invalid_name = self.client.put(
             path=self.update_sub_category_status_url,
@@ -133,7 +147,7 @@ class TestSubCategoryView(APITestCase):
         )
         response_sub_category_already_disabled = self.client.put(
             path=self.update_sub_category_status_url,
-            data={'name': 'test', 'is_active': False}
+            data={'name': self.sub_category.name, 'is_active': False}
         )
 
         self.assertEqual(response_invalid_type.status_code, status.HTTP_400_BAD_REQUEST)
@@ -145,11 +159,11 @@ class TestSubCategoryView(APITestCase):
         self.sub_category.save()
         response = self.client.put(
             path=self.update_sub_category_status_url,
-            data={'name': 'test', 'is_active': True}
+            data={'name': self.sub_category.name, 'is_active': True}
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertTrue(SubCategory.objects.get(name='test').is_active)
+        self.assertTrue(SubCategory.objects.get(name=self.sub_category.name).is_active)
 
     def test_activate_subcategories_with_valid_data(self):
         SubCategory.objects.create(name='test1', category=self.category, is_active=False)
@@ -181,21 +195,14 @@ class TestSubCategoryView(APITestCase):
 class TestProductViews(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user = User.objects.create_staff(
-            email='test@email.com', password='12345678'
-        )
+        cls.user = create_staff_user_test_data()
         cls.create_product_url = reverse('create_product')
         cls.is_active_status_url = reverse('is_active_status_product')
         cls.update_product_url = reverse('update_product')
         cls.get_product_url = reverse('product_detail')
-        cls.category = Category.objects.create(name="Test Category_product")
-        cls.sub_category = SubCategory.objects.create(
-            name='test_product', category=cls.category
-        )
-        cls.product = Product.objects.create(
-            category=cls.sub_category, name='Test',
-            brand='brand', description='description'
-        )
+        cls.category = create_category_test_data()
+        cls.sub_category = create_subcategory_test_data(cls.category)
+        cls.product = create_product_test_data(cls.sub_category)
 
     def setUp(self) -> None:
         self.client.force_authenticate(user=self.user)
@@ -204,7 +211,7 @@ class TestProductViews(APITestCase):
         response = self.client.post(
             path=self.create_product_url,
             data={
-                "category": 2,
+                "category": self.sub_category.id,
                 "name": 'product',
                 "brand": 'brand',
                 "price": 1000,
@@ -235,15 +242,16 @@ class TestProductViews(APITestCase):
         self.assertEqual(response_no_data.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_is_active_status_with_valid_data(self):
+        product_id = self.product.id
         response_deactivate = self.client.put(
             path=self.is_active_status_url,
             data={
-                'id': 1,
+                'id': product_id,
                 'is_active': False
             }
         )
 
-        self.assertFalse(Product.objects.get(id=1).is_active)
+        self.assertFalse(Product.objects.get(id=product_id).is_active)
         self.assertEqual(response_deactivate.status_code, status.HTTP_200_OK)
 
         self.product.is_active = False
@@ -251,26 +259,27 @@ class TestProductViews(APITestCase):
         response_activate = self.client.put(
             path=self.is_active_status_url,
             data={
-                'id': 1,
+                'id': product_id,
                 'is_active': True
             }
         )
 
         self.assertEqual(response_activate.status_code, status.HTTP_200_OK)
-        self.assertTrue(Product.objects.get(id=1).is_active)
+        self.assertTrue(Product.objects.get(id=product_id).is_active)
 
     def test_update_product_with_valid_data(self):
+        product_id = self.product.id
         response = self.client.put(
             path=self.update_product_url,
             data={
-                "id": 1,
+                "id": product_id,
                 "name": "Iphone 10",
                 "brand": "Samsung",
                 "description": "New Iphone!",
             }
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(Product.objects.get(id=1).brand, "Samsung")
+        self.assertEqual(Product.objects.get(id=product_id).brand, "Samsung")
 
     def test_update_product_with_invalid_data(self):
         response_400 = self.client.put(
@@ -293,11 +302,11 @@ class TestProductViews(APITestCase):
         )
         self.assertEqual(response_400.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response_404.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertNotEqual(Product.objects.get(id=1).brand, "Samsung")
+        self.assertNotEqual(Product.objects.get(id=self.product.id).brand, "Samsung")
 
     def test_get_product_with_valid_data(self):
         response = self.client.get(
-            path=self.get_product_url + "?id=1"
+            path=self.get_product_url + f"?id={self.product.id}"
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)

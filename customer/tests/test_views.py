@@ -9,6 +9,12 @@ from rest_framework_simplejwt.tokens import AccessToken
 User = get_user_model()
 
 
+def create_staff_user_test_data():
+    return User.objects.create_staff(
+        email='staff@test.com', password='12345678'
+    )
+
+
 class TestUserViews(TestCase):
 
     @classmethod
