@@ -1,15 +1,11 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 
-from rest_framework import status
 from rest_framework.generics import UpdateAPIView
 from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-
-from customer import serializers
-from customer.models import UserAddresses, PhoneNumbers
 
 User = get_user_model()
 
@@ -21,8 +17,7 @@ class UpdateUserAPIView(UpdateAPIView):
     queryset = User
 
     def get_object(self) -> User:
-        user_id = self.request.user.id
-        return self.queryset.objects.get(id=user_id)
+        return self.request.user
 
     def update(self, request, *args, **kwargs) -> Response:
         instance = self.get_object()
@@ -31,11 +26,12 @@ class UpdateUserAPIView(UpdateAPIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response({"message": "Updated successes"})
-        else:
-            return Response({"message": "failed", "details": serializer.errors})
+
+        return Response({"message": "failed", "details": serializer.errors})
 
 
 def get_user(user_id: str) -> dict:
+    """Get user with all related personal info."""
     user = User.objects.select_related('address', 'phone').get(id=user_id)
     address = user.address
     phone_number = user.phone

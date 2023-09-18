@@ -56,8 +56,7 @@ class DestroyUserView(DestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_object(self):
-        user_id = self.request.user.id
-        return User.objects.get(id=user_id)
+        return self.request.user
 
 
 class SendEmailVerification(APIView):
