@@ -20,7 +20,7 @@ def create_subcategory_test_data(category: Category) -> SubCategory:
 def create_product_test_data(subcategory: SubCategory) -> Product:
     return Product.objects.create(
         name='Iphone 10', description='test',
-        price=1000, quantity=20, brand='Apple',
+        price=1000, quantity=100, brand='Apple',
         category=subcategory
     )
 
