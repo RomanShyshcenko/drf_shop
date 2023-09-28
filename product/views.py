@@ -185,7 +185,7 @@ class ProductsListAPIView(ListAPIView):
     pagination_class = PageNumberPagination
     filter_backends = [OrderingFilter, DjangoFilterBackend, SearchFilter]
     search_fields = ['name', 'description', 'brand']
-    filter_fields = ['name', 'brand', 'category_id__name']
+    filter_fields = ['name', 'brand', 'category__name']
     ordering_fields = ['price']
 
     def get_queryset(self):
