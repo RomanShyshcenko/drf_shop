@@ -15,8 +15,7 @@ def send_verification_email(user):
         # title:
         "Password Reset for {title}".format(title="..."),
         # message:
-        f"Here is your reset password url http://localhost:8000/{reverse('email_verification')}"
-        f"?user_id={user_id}&confirmation_token={confirmation_token}",
+        body,
         # from:
         "example@example.com",
         # to:

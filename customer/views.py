@@ -80,13 +80,13 @@ class EmailVerification(APIView):
         except(TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
 
+        if not default_token_generator.check_token(user, confirmation_token):
+            return Response('Token is invalid or expired. Please request another confirmation email by signing in.',
+                            status=status.HTTP_400_BAD_REQUEST)
         if user.is_confirmed_email:
             return Response('Email has already been verified.', status=status.HTTP_400_BAD_REQUEST)
 
-        if default_token_generator.check_token(user, confirmation_token):
-            user.is_confirmed_email = True
-            user.save()
-            return Response('Email successfully confirmed')
+        user.is_confirmed_email = True
+        user.save()
+        return Response('Email successfully confirmed')
 
-        return Response('Token is invalid or expired. Please request another confirmation email by signing in.',
-                        status=status.HTTP_400_BAD_REQUEST)
