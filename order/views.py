@@ -8,7 +8,6 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 
-
 from order.models import Order
 from customer.permissions import IsStaffOrSuperuserPermission, HasCompleteAddressPermission, IsEmailVerifiedPermission
 from order import serializers
