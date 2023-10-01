@@ -1,7 +1,5 @@
 from rest_framework.permissions import BasePermission
 
-from customer.models import UserAddresses
-
 
 class IsStaffOrSuperuserPermission(BasePermission):
     def has_permission(self, request, view):
