@@ -1,5 +1,5 @@
 from django.utils import timezone
-from rest_framework import serializers, status
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from product.models import Product, Category, SubCategory
