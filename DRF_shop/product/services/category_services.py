@@ -6,7 +6,7 @@ from customer.permissions import IsStaffOrSuperuserPermission
 
 class ActivateOrDeactivateCategoryAPIView(UpdateAPIView):
     authentication_classes = ()
-    permission_classes = (IsStaffOrSuperuserPermission,)
+    permission_classes = ()
 
     def get_object(self):
         name = self.request.data.get('name')
