@@ -1,8 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import UpdateAPIView
 
-from customer.permissions import IsStaffOrSuperuserPermission
-
 
 class ActivateOrDeactivateCategoryAPIView(UpdateAPIView):
     authentication_classes = ()
