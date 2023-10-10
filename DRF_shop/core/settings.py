@@ -27,8 +27,8 @@ INSTALLED_APPS = [
     # External Packages
     'django_rest_passwordreset',
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
     'django_filters',
-
 
     # Internal Apps
     'customer.apps.CustomerConfig',
@@ -77,9 +77,7 @@ DATABASES = {
         'PASSWORD': os.environ.get("PASSWORD", 'postgres'),
         'HOST': os.environ.get("HOST", 'localhost'),
         'PORT': os.environ.get("PORT", '5432'),
-
     }
-
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -118,7 +116,6 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
-
 }
 
 
@@ -137,49 +134,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom User model
 AUTH_USER_MODEL = "customer.User"
 
-LOGGING = {
-    'version': 1,
-    'handlers': {
-        'console': {'class': 'logging.StreamHandler'}
-    },
-    'loggers': {
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'DEBUG'
-        }
-    },
-}
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=int(os.environ.get("ACCESS_TOKEN_LIFETIME"))),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=int(os.environ.get("REFRESH_TOKEN_LIFETIME"))),
-    "ROTATE_REFRESH_TOKENS": False,
+    "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": True,
-
     "ALGORITHM": os.environ.get("ALGORITHM"),
     "SIGNING_KEY": os.environ.get("SECRET_KEY"),
-    "VERIFYING_KEY": "",
-    "AUDIENCE": None,
-    "ISSUER": None,
-    "JSON_ENCODER": None,
-    "JWK_URL": None,
-    "LEEWAY": 0,
-
     "AUTH_HEADER_TYPES": ("Bearer",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
     "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
-
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
     "TOKEN_TYPE_CLAIM": "token_type",
     "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
-
     "JTI_CLAIM": "jti",
-
-    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
-    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
-    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
-
