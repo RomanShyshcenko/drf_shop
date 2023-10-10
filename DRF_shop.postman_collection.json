@@ -1,0 +1,5569 @@
+{
+	"info": {
+		"_postman_id": "b4f85f98-5602-4912-bc1f-53fd6a83150a",
+		"name": "DRF_shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20282155"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"amigomaroma@gmail.com\",\n    \"password\": \"12345678fm\",\n    \"confirm_password\": \"12345678fm\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_endpoint}}/user/create/",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"user",
+								"create",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"amigma@a1ds.ada\",\n    \"password\": \"12345678\",\n    \"confirm_password\": \"12345678\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/user/create/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"create",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 08 Jun 2023 06:14:38 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.3"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "400 User already exist",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"amigma@a1ds.ada\",\n    \"password\": \"12345678\",\n    \"confirm_password\": \"12345678\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/user/create/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"create",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 08 Jun 2023 06:16:43 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "166"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"massage\": \"User already exist\",\n    \"error\": \"duplicate key value violates unique constraint \\\"user_email_key\\\"\\nDETAIL:  Key (email)=(amigma@a1ds.ada) already exists.\\n\"\n}"
+						},
+						{
+							"name": "400 Password Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"amigma@a1ds.ada\",\n    \"password\": \"1234567\",\n    \"confirm_password\": \"12345678\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/user/create/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"create",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 08 Jun 2023 06:19:52 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "66"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"non_field_errors\": [\n        \"Pleas enter your password correct 2 times\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4NTAyNzkwLCJpYXQiOjE2OTU5MTA3OTAsImp0aSI6ImY4NGE3YmVjNzZjMjQ2ZDE5Y2JiMjU5YjQwNzlhOTVlIiwidXNlcl9pZCI6IjMxYTYxMmEyLWY1NjUtNGRmNS1hY2Q0LTJkZTk3MmI5MzZhYyJ9.kEOZw0wHPOj0Yo4Hyf1HgHZlHEq0QKPob57F2s-2dEM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"address\",\n    \"last_name\": \"Shyshchenko\",\n    \"address\": {\n        \"city\": \"kyiv\",\n        \"street_address\": \"ar\",\n        \"apartment_address\": \"a\",\n        \"postal_code\": \"a\" \n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_endpoint}}/user/update/",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"user",
+								"update",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "401 Unauthorized",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \n    \"first_name\": \"Roman\",\n    \"last_name\": \"Shyshchenko\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/user/update/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"update",
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 08 Jun 2023 06:46:06 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "WWW-Authenticate",
+									"value": "Bearer realm=\"api\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "PUT, PATCH, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"detail\": \"User not found\",\n    \"code\": \"user_not_found\"\n}"
+						},
+						{
+							"name": "200 Updated successes",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"\",\n    \"last_name\": \"Shyshchenko\",\n    \"address\": {\n        \"city\": \"kyiv\",\n        \"street_address\": \"ar\",\n        \"apartment_address\": \"a\",\n        \"postal_code\": \"a\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/user/update/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"update",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 10 Jun 2023 12:33:01 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "PUT, PATCH, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "31"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Updated successes\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5NTIyNTY5LCJpYXQiOjE2OTY5MzA1NjksImp0aSI6ImUzYzNiZGRkMTE5YzQ0MGE5MTM0OTc1NGVlOWMwNzdiIiwidXNlcl9pZCI6ImJmY2VjZTlmLTFlNDMtNDJmNC05NDdkLTE0NTBmZDYxYTE4YSJ9.C-QDc7A23K8A4sdKFRPL9BmdzzgycXNElW8vYARxS80",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_endpoint}}/user/get/",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"user",
+								"get",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "401 Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/user/get/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"get",
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 08 Jun 2023 06:21:36 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "WWW-Authenticate",
+									"value": "Bearer realm=\"api\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"detail\": \"User not found\",\n    \"code\": \"user_not_found\"\n}"
+						},
+						{
+							"name": "200 Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/user/get/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"get",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:26:09 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "248"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"43932d22-4cee-43d8-922d-ddbef2b95c94\",\n    \"email\": \"amigomaroma1@gmail.com\",\n    \"first_name\": \"\",\n    \"last_name\": \"\",\n    \"address\": {\n        \"city\": \"\",\n        \"street_address\": \"\",\n        \"apartment_address\": \"\",\n        \"postal_code\": \"\"\n    },\n    \"phone_number\": {\n        \"phone_number\": null,\n        \"is_verified\": false\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "change-password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4Nzk4NjAzLCJpYXQiOjE2ODYyMDY2MDMsImp0aSI6ImMwMjkxMzllZjA5ODQ2MzhhNjhiY2IzNWFlM2M3YmQ5IiwidXNlcl9pZCI6ImQ0MDU3ODI3LTY1MjMtNDM4MC04OGUzLWIwODkzZjczYTdmMiJ9._eH2n_qcbpOr3TBBsWI9sRse8YyI69QvRrazkafneK0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"old_password\": \"12345678\",\n    \"new_password\": \"123456781\",\n    \"confirm_password\": \"123456781\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_endpoint}}/user/change-password/",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"user",
+								"change-password",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "400 incorect old password",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"old_password\": \"12345678\",\n    \"new_password\": \"123456781\",\n    \"confirm_password\": \"123456781\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/user/change-password/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"change-password",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:27:17 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "PUT, PATCH, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "64"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"non_field_errors\": [\n        \"Pleas correctly enter your old password\"\n    ]\n}"
+						},
+						{
+							"name": "400 New password cannot match old",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"old_password\": \"123456781fm\",\n    \"new_password\": \"123456781fm\",\n    \"confirm_password\": \"123456781fm\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/user/change-password/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"change-password",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:28:39 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "PUT, PATCH, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "54"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"non_field_errors\": [\n        \"New password cannot match old\"\n    ]\n}"
+						},
+						{
+							"name": "200 Ok",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"old_password\": \"12345678fm\",\n    \"new_password\": \"123456781fm\",\n    \"confirm_password\": \"123456781fm\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/user/change-password/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"change-password",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:29:36 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "PUT, PATCH, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "31"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Updated successes\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Send email verification",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg5Nzg0MzM5LCJpYXQiOjE2ODcxOTIzMzksImp0aSI6IjkyOTdkOTgyZjAzYTQ0MzY4OWZiMmZmMzY0Yzk1YTQzIiwidXNlcl9pZCI6IjNkYTA3NzhhLTE2MGUtNGIyZi05ZTMzLWFlZDUwMDQ5OTA5YSJ9.8ZsSlEZo2w4Mt53jcKeC0Vd_MkjyemplG00Q0K0wTKQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"amigomaroma@gmail.com\",\n    \"password\": \"12345678fm\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_endpoint}}/user/email/send-verification/",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"user",
+								"email",
+								"send-verification",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "500",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"amigomaroma1@gmail.com\",\n    \"password\": \"123456781fm\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/user/email/send-verification/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"email",
+										"send-verification",
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:30:55 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "42"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"[Errno 111] Connection refused\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Verify Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_endpoint}}/user/email/verification?user_id=43932d22-4cee-43d8-922d-ddbef2b95c94&confirmation_token=bv8abj-485cfae23667737c950472a760133d29",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"user",
+								"email",
+								"verification"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "43932d22-4cee-43d8-922d-ddbef2b95c94"
+								},
+								{
+									"key": "confirmation_token",
+									"value": "bv8abj-485cfae23667737c950472a760133d29"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_endpoint}}/user/email/verification?user_id=43932d22-4cee-43d8-922d-ddbef2b95c94&confirmation_token=bv8abj-485cfae23667737c950472a760133d29",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"email",
+										"verification"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "43932d22-4cee-43d8-922d-ddbef2b95c94"
+										},
+										{
+											"key": "confirmation_token",
+											"value": "bv8abj-485cfae23667737c950472a760133d29"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:32:56 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "\"Email successfully confirmed\""
+						},
+						{
+							"name": "400 Already verified",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_endpoint}}/user/email/verification?user_id=43932d22-4cee-43d8-922d-ddbef2b95c94&confirmation_token=bv8abj-485cfae23667737c950472a760133d29",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"email",
+										"verification"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "43932d22-4cee-43d8-922d-ddbef2b95c94"
+										},
+										{
+											"key": "confirmation_token",
+											"value": "bv8abj-485cfae23667737c950472a760133d29"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:38:51 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "34"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "\"Email has already been verified.\""
+						},
+						{
+							"name": "400 Invalid token",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_endpoint}}/user/email/verification?user_id=43932d22-4cee-43d8-922d-ddbef2b95c94&confirmation_token=bv8abj-485cfae23667737c950472a7601",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"email",
+										"verification"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "43932d22-4cee-43d8-922d-ddbef2b95c94"
+										},
+										{
+											"key": "confirmation_token",
+											"value": "bv8abj-485cfae23667737c950472a7601"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:41:17 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "87"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "\"Token is invalid or expired. Please request another confirmation email by signing in.\""
+						}
+					]
+				},
+				{
+					"name": "update email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4NDgxODIzLCJpYXQiOjE2OTU4ODk4MjMsImp0aSI6IjNmNGEzMGZhM2IwYzQ1MDI5ZGQyOTA5YmZhYmYzNzA3IiwidXNlcl9pZCI6IjQzOTMyZDIyLTRjZWUtNDNkOC05MjJkLWRkYmVmMmI5NWM5NCJ9.q4PayDssPFQWHPYsRp_rDYhUEb5aEXbTWhw2z079v44",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@emai.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_endpoint}}/user/email/change/",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"user",
+								"email",
+								"change",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 Ok",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test@emai.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/user/email/change/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"email",
+										"change",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:43:04 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "PUT, PATCH, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "31"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Updated successes\"\n}"
+						},
+						{
+							"name": "400 new email can't math old",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test@emai.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/user/email/change/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"email",
+										"change",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:43:17 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "PUT, PATCH, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "49"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"non_field_errors\": [\n        \"new email can't math old\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4NDgxODIzLCJpYXQiOjE2OTU4ODk4MjMsImp0aSI6IjNmNGEzMGZhM2IwYzQ1MDI5ZGQyOTA5YmZhYmYzNzA3IiwidXNlcl9pZCI6IjQzOTMyZDIyLTRjZWUtNDNkOC05MjJkLWRkYmVmMmI5NWM5NCJ9.q4PayDssPFQWHPYsRp_rDYhUEb5aEXbTWhw2z079v44",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_endpoint}}/user/delete/",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"user",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "204 No content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{api_endpoint}}/user/delete/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"delete",
+										""
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:48:15 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "DELETE, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "401 User not found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{api_endpoint}}/user/delete/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"user",
+										"delete",
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:48:39 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "WWW-Authenticate",
+									"value": "Bearer realm=\"api\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "DELETE, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"detail\": \"User not found\",\n    \"code\": \"user_not_found\"\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4MTEyMzc1LCJpYXQiOjE2ODU1MjAzNzUsImp0aSI6IjgyMWQ1MThhNWIzMTRlYTM4NzQ0NjA5NTliYjQwOTM5IiwidXNlcl9pZCI6ImUxMjBiNDI0LTcwMTgtNDQ3Ny05Nzg4LTQxNGMzMjAyNzNmYyJ9.XtTzx-Iw41dbN0JfLhP0Mt5AkG2mcZiyzzC67QSrwUE",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "Create Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"amigomaroma@gmail.com\",\n    \"password\": \"12345678fm\"\n}\n\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_endpoint}}/token/",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"token",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"amigomaroma1@gmail.com\",\n    \"password\": \"12345678fm\"\n}\n\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/token/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"token",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:24:14 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "582"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwMzY2NTQ1NCwiaWF0IjoxNjk1ODg5NDU0LCJqdGkiOiIyZjRlZjExOWE5M2Q0YjdjODZhZjkwMzY4ZjFhYTJiZCIsInVzZXJfaWQiOiI0MzkzMmQyMi00Y2VlLTQzZDgtOTIyZC1kZGJlZjJiOTVjOTQifQ.QF5nOw7usfiMPWWTGDCuEd1-He7LcdodeINzuclAW2s\",\n    \"access\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4NDgxNDU0LCJpYXQiOjE2OTU4ODk0NTQsImp0aSI6ImIwM2I0ZWYzZmRkMzQ3YTQ4MTkxZmQzN2U5YzYzZTY5IiwidXNlcl9pZCI6IjQzOTMyZDIyLTRjZWUtNDNkOC05MjJkLWRkYmVmMmI5NWM5NCJ9.Z5uR1DUJSgtbjvRO4aitlnONfc3AClIo1iX_0TCRAC0\"\n}"
+						},
+						{
+							"name": "401 Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"amigomaroma1234@gmail.com\",\n    \"password\": \"12345678fm\"\n}\n\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/token/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"token",
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:24:44 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "WWW-Authenticate",
+									"value": "Bearer realm=\"api\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "63"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"detail\": \"No active account found with the given credentials\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5NzAxNjk2OSwiaWF0IjoxNjk2OTMwNTY5LCJqdGkiOiI5Yzc4ZjU5MzYxZjA0YmNlYjI3NDA3Njc0MjhmZWQ0MCIsInVzZXJfaWQiOiJiZmNlY2U5Zi0xZTQzLTQyZjQtOTQ3ZC0xNDUwZmQ2MWExOGEifQ.V9b1o6TfmmI0HTibqNPXtWUbfefL25-SB3J12CYSQY4\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_endpoint}}/token/refresh/",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"token",
+								"refresh",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "401 invalid token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5NDU5NjA3MSwiaWF0IjoxNjg2ODIwMDcxLCJqdGkiOiJkZGY3N2IxMDc5MzY0NmU5YTZmMWI3NzZlYTk5MGU5NCIsInVzZXJfaWQiOiJiNmM0ZDgxNS0zMjA3LTQ5YTMtYWI4MC1jMThjMDk3NmM2OWQifQ.dRsNLZXtA7ph9Nkq20YAljhAMAt5AN3P9hAF-TAH2Ao\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/token/refresh/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"token",
+										"refresh",
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:50:17 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "WWW-Authenticate",
+									"value": "Bearer realm=\"api\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "65"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"detail\": \"Token is invalid or expired\",\n    \"code\": \"token_not_valid\"\n}"
+						},
+						{
+							"name": "200 Ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwMzY2NzAwNiwiaWF0IjoxNjk1ODkxMDA2LCJqdGkiOiI1OWNlZTNiZmE1YWQ0OWQxYTE5Y2UwMmZmMDhhYWIyNCIsInVzZXJfaWQiOiIzMWE2MTJhMi1mNTY1LTRkZjUtYWNkNC0yZGU5NzJiOTM2YWMifQ.NlwBe1fKYauLXMnPTaAd8lHn3vxSOUPO8zQURZXKFkQ\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/token/refresh/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"token",
+										"refresh",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 08:50:53 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "290"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"access\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4NDgzMDUzLCJpYXQiOjE2OTU4OTEwMDYsImp0aSI6ImEzMGI5MGQ4MzNkYTRiZmI4YzAwYjRkOTgxOWE4MzBmIiwidXNlcl9pZCI6IjMxYTYxMmEyLWY1NjUtNGRmNS1hY2Q0LTJkZTk3MmI5MzZhYyJ9.eJ1bY09gPNSxlCpyPnhdJ_ZbXcevIyp4Nf1f3vs21Sg\"\n}"
+						},
+						{
+							"name": "401 token is blacklisted",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwNDcwNjExMSwiaWF0IjoxNjk2OTMwMTExLCJqdGkiOiJkOTYzODAxMDYzNDU0OTBkYTk0Yjc5ZjUzNmY5MmYwYSIsInVzZXJfaWQiOiJiZmNlY2U5Zi0xZTQzLTQyZjQtOTQ3ZC0xNDUwZmQ2MWExOGEifQ._AxDCgLrhIxQJOwVKOe0wbh0F_0055L6wpsnYXylCgw\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/token/refresh/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"token",
+										"refresh",
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 10 Oct 2023 09:31:56 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "WWW-Authenticate",
+									"value": "Bearer realm=\"api\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"detail\": \"Token is blacklisted\",\n    \"code\": \"token_not_valid\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "create product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Iphone 9\",\n    \"brand\": \"Apple\",\n    \"price\": 1200,\n    \"quantity\": 20,\n    \"description\": \"New Iphone!\",\n    \"category_id\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/product/create/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"product",
+										"create",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Iphone 9\",\n    \"brand\": \"Apple\",\n    \"price\": 1200,\n    \"quantity\": 20,\n    \"description\": \"New Iphone!\",\n    \"category\": 1\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/product/create/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"product",
+												"create",
+												""
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:11:14 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "POST, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "175"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 4,\n    \"category\": 1,\n    \"name\": \"Iphone 9\",\n    \"brand\": \"Apple\",\n    \"price\": \"1200.00\",\n    \"quantity\": 20,\n    \"description\": \"New Iphone!\",\n    \"is_active\": true,\n    \"created_at\": \"2023-09-28T14:11:14.646389Z\"\n}"
+								},
+								{
+									"name": "400 field required",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"brand\": \"Apple\",\n    \"price\": 1200,\n    \"quantity\": 20,\n    \"description\": \"New Iphone!\",\n    \"category\": 1\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/product/create/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"product",
+												"create",
+												""
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:11:49 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "POST, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"name\": [\n        \"This field is required.\"\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Deactivate product",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 12,\n    \"is_active\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/product/is_active/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"product",
+										"is_active",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 12,\n    \"is_active\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/product/is_active/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"product",
+												"is_active",
+												""
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:13:14 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "23"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"detail\": \"Not found.\"\n}"
+								},
+								{
+									"name": "400 already this status",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 6,\n    \"is_active\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/product/is_active/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"product",
+												"is_active",
+												""
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:13:40 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "51"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"non_field_errors\": [\n        \"Product already activated!\"\n    ]\n}"
+								},
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 6,\n    \"is_active\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/product/is_active/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"product",
+												"is_active",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:14:16 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "192"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 6,\n    \"name\": \"Iphone 9\",\n    \"brand\": \"Apple\",\n    \"price\": \"1200.00\",\n    \"description\": \"New Iphone!\",\n    \"is_active\": false,\n    \"updated_at\": \"2023-09-28T14:14:16.815304Z\",\n    \"deleted_at\": \"2023-09-28T14:14:16.815242Z\"\n}"
+								}
+							]
+						},
+						{
+							"name": "update product",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 18,\n    \"name\": \"Iphone 10\",\n    \"brand\": \"Appl\",\n    \"description\": \"New Iphone!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/product/update/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"product",
+										"update",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 5,\n    \"name\": \"Iphone 10\",\n    \"brand\": \"Appl\",\n    \"quantity\": 12,\n    \"description\": \"New Iphone!\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/product/update/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"product",
+												"update",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:14:56 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "102"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 5,\n    \"name\": \"Iphone 10\",\n    \"brand\": \"Appl\",\n    \"price\": \"1200.00\",\n    \"quantity\": 12,\n    \"description\": \"New Iphone!\"\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 200,\n    \"name\": \"Iphone 10\",\n    \"brand\": \"Appl\",\n    \"quantity\": 12,\n    \"description\": \"New Iphone!\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/product/update/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"product",
+												"update",
+												""
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:15:24 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "23"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"detail\": \"Not found.\"\n}"
+								}
+							]
+						},
+						{
+							"name": "get product",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/product/detail/?id=1231",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"product",
+										"detail",
+										""
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1231"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/product/detail/?id=1",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"product",
+												"detail",
+												""
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:19:03 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "GET, HEAD, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "176"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 1,\n    \"category\": 1,\n    \"name\": \"Iphone 12\",\n    \"brand\": \"Apple\",\n    \"price\": \"1200.00\",\n    \"quantity\": 20,\n    \"description\": \"New Iphone!\",\n    \"is_active\": true,\n    \"created_at\": \"2023-09-11T08:08:03.088468Z\"\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/product/detail/?id=1231",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"product",
+												"detail",
+												""
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "1231"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:19:21 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "GET, HEAD, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "23"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"detail\": \"Not found.\"\n}"
+								}
+							]
+						},
+						{
+							"name": "products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_endpoint}}/product/?ordering=price",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"product",
+										""
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Iphone 9",
+											"disabled": true
+										},
+										{
+											"key": "brand",
+											"value": "Apple",
+											"disabled": true
+										},
+										{
+											"key": "ordering",
+											"value": "price"
+										},
+										{
+											"key": "search",
+											"value": "Iphone 12",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "find 2 products",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{api_endpoint}}/product/?name=Iphone 9&brand=Apple&ordering=price&search=",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"product",
+												""
+											],
+											"query": [
+												{
+													"key": "name",
+													"value": "Iphone 9"
+												},
+												{
+													"key": "brand",
+													"value": "Apple"
+												},
+												{
+													"key": "ordering",
+													"value": "price"
+												},
+												{
+													"key": "search",
+													"value": ""
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Mon, 04 Sep 2023 16:17:26 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "GET, HEAD, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "359"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": 1,\n        \"category_id\": 1,\n        \"name\": \"Iphone 9\",\n        \"brand\": \"Apple\",\n        \"price\": \"1200.00\",\n        \"quantity\": 20,\n        \"description\": \"New Iphone!\",\n        \"is_active\": true,\n        \"created_at\": \"2023-08-25T15:23:39.075132Z\"\n    },\n    {\n        \"id\": 2,\n        \"category_id\": 1,\n        \"name\": \"Iphone 9\",\n        \"brand\": \"Apple\",\n        \"price\": \"1200.00\",\n        \"quantity\": 20,\n        \"description\": \"New Iphone!\",\n        \"is_active\": true,\n        \"created_at\": \"2023-09-04T15:44:53.704027Z\"\n    }\n]"
+								},
+								{
+									"name": "ordered by price",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{api_endpoint}}/product/?ordering=price&search=",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"product",
+												""
+											],
+											"query": [
+												{
+													"key": "name",
+													"value": "Iphone 9",
+													"disabled": true
+												},
+												{
+													"key": "brand",
+													"value": "Apple",
+													"disabled": true
+												},
+												{
+													"key": "ordering",
+													"value": "price"
+												},
+												{
+													"key": "search",
+													"value": ""
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Mon, 04 Sep 2023 16:21:13 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "GET, HEAD, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "900"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": 3,\n        \"category_id\": 1,\n        \"name\": \"Iphone 10\",\n        \"brand\": \"Apple\",\n        \"price\": \"120.00\",\n        \"quantity\": 20,\n        \"description\": \"New Iphone!\",\n        \"is_active\": true,\n        \"created_at\": \"2023-09-04T15:45:05.448744Z\"\n    },\n    {\n        \"id\": 1,\n        \"category_id\": 1,\n        \"name\": \"Iphone 9\",\n        \"brand\": \"Apple\",\n        \"price\": \"1200.00\",\n        \"quantity\": 20,\n        \"description\": \"New Iphone!\",\n        \"is_active\": true,\n        \"created_at\": \"2023-08-25T15:23:39.075132Z\"\n    },\n    {\n        \"id\": 2,\n        \"category_id\": 1,\n        \"name\": \"Iphone 9\",\n        \"brand\": \"Apple\",\n        \"price\": \"1200.00\",\n        \"quantity\": 20,\n        \"description\": \"New Iphone!\",\n        \"is_active\": true,\n        \"created_at\": \"2023-09-04T15:44:53.704027Z\"\n    },\n    {\n        \"id\": 5,\n        \"category_id\": 1,\n        \"name\": \"Iphone 11\",\n        \"brand\": \"Apple2\",\n        \"price\": \"1560.00\",\n        \"quantity\": 20,\n        \"description\": \"New Iphone!\",\n        \"is_active\": true,\n        \"created_at\": \"2023-09-04T15:45:31.094495Z\"\n    },\n    {\n        \"id\": 4,\n        \"category_id\": 1,\n        \"name\": \"Iphone 10\",\n        \"brand\": \"Apple\",\n        \"price\": \"15060.00\",\n        \"quantity\": 20,\n        \"description\": \"New Iphone!\",\n        \"is_active\": true,\n        \"created_at\": \"2023-09-04T15:45:16.371370Z\"\n    }\n]"
+								},
+								{
+									"name": "nothing was found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{api_endpoint}}/product/?name=Iphone 9asdasd&ordering=price&search=",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"product",
+												""
+											],
+											"query": [
+												{
+													"key": "name",
+													"value": "Iphone 9asdasd"
+												},
+												{
+													"key": "brand",
+													"value": "Apple",
+													"disabled": true
+												},
+												{
+													"key": "ordering",
+													"value": "price"
+												},
+												{
+													"key": "search",
+													"value": ""
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Mon, 04 Sep 2023 16:21:50 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "GET, HEAD, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "2"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "[]"
+								},
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/product/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"product",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:15:47 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "GET, HEAD, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1113"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"count\": 6,\n    \"next\": null,\n    \"previous\": null,\n    \"results\": [\n        {\n            \"id\": 6,\n            \"category\": 1,\n            \"name\": \"Iphone 9\",\n            \"brand\": \"Apple\",\n            \"price\": \"1200.00\",\n            \"quantity\": 20,\n            \"description\": \"New Iphone!\",\n            \"is_active\": false,\n            \"created_at\": \"2023-09-28T14:12:34.832871Z\"\n        },\n        {\n            \"id\": 5,\n            \"category\": 1,\n            \"name\": \"Iphone 10\",\n            \"brand\": \"Appl\",\n            \"price\": \"1200.00\",\n            \"quantity\": 12,\n            \"description\": \"New Iphone!\",\n            \"is_active\": true,\n            \"created_at\": \"2023-09-28T14:11:31.369427Z\"\n        },\n        {\n            \"id\": 4,\n            \"category\": 1,\n            \"name\": \"Iphone 9\",\n            \"brand\": \"Apple\",\n            \"price\": \"1200.00\",\n            \"quantity\": 20,\n            \"description\": \"New Iphone!\",\n            \"is_active\": true,\n            \"created_at\": \"2023-09-28T14:11:14.646389Z\"\n        },\n        {\n            \"id\": 3,\n            \"category\": 2,\n            \"name\": \"Iphone 12+\",\n            \"brand\": \"Apple\",\n            \"price\": \"1250.00\",\n            \"quantity\": 20,\n            \"description\": \"New Iphone!\",\n            \"is_active\": true,\n            \"created_at\": \"2023-09-12T09:24:04.217146Z\"\n        },\n        {\n            \"id\": 2,\n            \"category\": 1,\n            \"name\": \"Iphone 12+\",\n            \"brand\": \"Apple\",\n            \"price\": \"1250.00\",\n            \"quantity\": 20,\n            \"description\": \"New Iphone!\",\n            \"is_active\": true,\n            \"created_at\": \"2023-09-11T08:08:22.146757Z\"\n        },\n        {\n            \"id\": 1,\n            \"category\": 1,\n            \"name\": \"Iphone 12\",\n            \"brand\": \"Apple\",\n            \"price\": \"1200.00\",\n            \"quantity\": 20,\n            \"description\": \"New Iphone!\",\n            \"is_active\": true,\n            \"created_at\": \"2023-09-11T08:08:03.088468Z\"\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "update-status category",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Test3\",\n    \"is_active\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/category/update-status/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"category",
+										"update-status",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "403",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Test3\",\n    \"is_active\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/category/update-status/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"category",
+												"update-status",
+												""
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 08 Aug 2023 09:07:47 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.3"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "63"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"detail\": \"You do not have permission to perform this action.\"\n}"
+								},
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Test32\",\n    \"is_active\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/category/disable/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"category",
+												"disable",
+												""
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 08 Aug 2023 09:14:00 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.3"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"detail\": \"Category does not exist\"\n}"
+								},
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Test21\",\n    \"is_active\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/category/disable/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"category",
+												"disable",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 08 Aug 2023 09:15:11 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.3"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "85"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 7,\n    \"name\": \"Test21\",\n    \"is_active\": false,\n    \"created_at\": \"2023-08-08T09:15:04.445741Z\"\n}"
+								}
+							]
+						},
+						{
+							"name": "create category",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Test_category\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/category/create/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"category",
+										"create",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "400 Already exists",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Test3\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/category/create/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"category",
+												"create",
+												""
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 08 Aug 2023 09:14:15 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.3"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "POST, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "52"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"name\": [\n        \"category with this name already exists.\"\n    ]\n}"
+								},
+								{
+									"name": "201 Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Test_category\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/category/create/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"category",
+												"create",
+												""
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 11:28:14 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "POST, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "91"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 8,\n    \"name\": \"Test_category\",\n    \"is_active\": true,\n    \"created_at\": \"2023-09-28T11:28:14.100766Z\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Sub Category",
+					"item": [
+						{
+							"name": "create sub category",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Test\",\n    \"category_id\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/sub_category/create/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"sub_category",
+										"create",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "403",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Tester123\",\n    \"category_id\": 6\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/create/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"create",
+												""
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 08 Aug 2023 09:04:57 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.3"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "POST, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "63"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"detail\": \"You do not have permission to perform this action.\"\n}"
+								},
+								{
+									"name": "400 this name already exist",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Tester123\",\n    \"category_id\": 6\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/create/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"create",
+												""
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 08 Aug 2023 09:06:03 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.3"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "POST, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "56"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"name\": [\n        \"sub category with this name already exists.\"\n    ]\n}"
+								},
+								{
+									"name": "201",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Test_sub_category\",\n    \"category\": 1\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/create/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"create",
+												""
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 11:36:38 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "POST, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "41"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"name\": \"Test_sub_category\",\n    \"category\": 1\n}"
+								}
+							]
+						},
+						{
+							"name": "disable sub category",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Test_sub_category\",\n    \"is_active\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/sub_category/update-status/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"sub_category",
+										"update-status",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "404",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Tester123s\",\n    \"is_active\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/update-status/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"update-status",
+												""
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 11:39:45 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "23"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"detail\": \"Not found.\"\n}"
+								},
+								{
+									"name": "403",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Tessw\",\n    \"is_active\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/update-status/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"update-status",
+												""
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 08 Aug 2023 09:02:10 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.3"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "63"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"detail\": \"You do not have permission to perform this action.\"\n}"
+								},
+								{
+									"name": "400 Category already disabled!",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Tessw\",\n    \"is_active\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/update-status/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"update-status",
+												""
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 08 Aug 2023 09:03:44 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.3"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "40"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Category already disabled!\"\n}"
+								},
+								{
+									"name": "400 category already activated",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Test_sub_category\",\n    \"is_active\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/update-status/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"update-status",
+												""
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 11:44:31 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "56"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"non_field_errors\": [\n        \"Sub category already activated!\"\n    ]\n}"
+								},
+								{
+									"name": "201",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Tester123\",\n    \"is_active\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/update-status/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"update-status",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 08 Aug 2023 09:07:19 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.3"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "89"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 21,\n    \"name\": \"Tester123\",\n    \"is_active\": false,\n    \"created_at\": \"2023-08-08T09:05:34.111344Z\"\n}"
+								}
+							]
+						},
+						{
+							"name": "activate all sub categories of concrete category",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Test3\",\n    \"is_active\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/sub_category/eneble/all/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"sub_category",
+										"eneble",
+										"all",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200 Ok",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Test_category\",\n    \"is_active\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/enable/all/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"enable",
+												"all",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:02:39 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "158"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"parent_category\": \"Test_category\",\n    \"sub_categories\": [\n        {\n            \"name\": \"Test91\",\n            \"is_active\": true\n        },\n        {\n            \"name\": \"Test90\",\n            \"is_active\": true\n        },\n        {\n            \"name\": \"Test0\",\n            \"is_active\": true\n        }\n    ]\n}"
+								},
+								{
+									"name": "200 No sub_categories",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Test_category\",\n    \"is_active\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/enable/all/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"enable",
+												"all",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:00:29 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "55"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"parent_category\": \"Test_category\",\n    \"sub_categories\": []\n}"
+								},
+								{
+									"name": "404 Not Found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Test_catego\",\n    \"is_active\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/enable/all/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"enable",
+												"all",
+												""
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:04:16 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "23"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"detail\": \"Not found.\"\n}"
+								}
+							]
+						},
+						{
+							"name": "update-status sub category",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": [
+								{
+									"name": "400 already this status",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Test\",\n    \"is_active\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/update-status/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"update-status",
+												""
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:07:32 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "55"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"non_field_errors\": [\n        \"Sub category already disabled!\"\n    ]\n}"
+								},
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Test\",\n    \"is_active\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/update-status/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"update-status",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:08:42 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "82"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 1,\n    \"name\": \"Test\",\n    \"is_active\": true,\n    \"created_at\": \"2023-09-11T08:07:34.373213Z\"\n}"
+								},
+								{
+									"name": "404 Not Found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Tes\",\n    \"is_active\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{api_endpoint}}/sub_category/update-status/",
+											"host": [
+												"{{api_endpoint}}"
+											],
+											"path": [
+												"sub_category",
+												"update-status",
+												""
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Thu, 28 Sep 2023 14:09:41 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "WSGIServer/0.2 CPython/3.11.5"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept"
+										},
+										{
+											"key": "Allow",
+											"value": "PUT, PATCH, OPTIONS"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Length",
+											"value": "23"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "same-origin"
+										},
+										{
+											"key": "Cross-Origin-Opener-Policy",
+											"value": "same-origin"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"detail\": \"Not found.\"\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "create order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4NTAyNzkwLCJpYXQiOjE2OTU5MTA3OTAsImp0aSI6ImY4NGE3YmVjNzZjMjQ2ZDE5Y2JiMjU5YjQwNzlhOTVlIiwidXNlcl9pZCI6IjMxYTYxMmEyLWY1NjUtNGRmNS1hY2Q0LTJkZTk3MmI5MzZhYyJ9.kEOZw0wHPOj0Yo4Hyf1HgHZlHEq0QKPob57F2s-2dEM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_items\": [\n        {\n            \"product\": 1,\n            \"quantity\": 1\n        },\n        {\n            \"product\": 2,\n            \"quantity\": 1\n        }\n    ],\n    \"delivery_address\": {\n        \"city\": \"Kiyv\",\n        \"street_address\": \"Pulya\",\n        \"apartment_address\": \"89\"\n    },\n    \"use_new_address\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_endpoint}}/order/create/",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"order",
+								"create",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "400 not complete address",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"order_items\": [\n        {\n            \"product\": 1,\n            \"quantity\": 1\n        },\n        {\n            \"product\": 2,\n            \"quantity\": 1\n        }\n    ],\n    \"delivery_address\": {\n        \"city\": \"Kiyv\",\n        \"street_address\": \"Pulya\",\n        \"apartment_address\": \"89\"\n    },\n    \"use_new_address\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/order/create/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"order",
+										"create",
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 14:20:19 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "69"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"detail\": \"You must have a complete address to perform this action.\"\n}"
+						},
+						{
+							"name": "403 not confirmed address",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"order_items\": [\n        {\n            \"product\": 1,\n            \"quantity\": 1\n        },\n        {\n            \"product\": 2,\n            \"quantity\": 1\n        }\n    ],\n    \"delivery_address\": {\n        \"city\": \"Kiyv\",\n        \"street_address\": \"Pulya\",\n        \"apartment_address\": \"89\"\n    },\n    \"use_new_address\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/order/create/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"order",
+										"create",
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 14:21:40 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "47"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"detail\": \"Please confirm your email address!\"\n}"
+						},
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"order_items\": [\n        {\n            \"product\": 1,\n            \"quantity\": 1\n        },\n        {\n            \"product\": 2,\n            \"quantity\": 1\n        }\n    ],\n    \"delivery_address\": {\n        \"city\": \"Kiyv\",\n        \"street_address\": \"Pulya\",\n        \"apartment_address\": \"89\"\n    },\n    \"use_new_address\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/order/create/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"order",
+										"create",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 14:22:55 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "407"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"status\": \"P\",\n    \"order_items\": [\n        {\n            \"id\": 5,\n            \"order\": 3,\n            \"product\": 2,\n            \"quantity\": 1,\n            \"created_at\": \"2023-09-28T14:22:55.377437Z\",\n            \"updated_at\": \"2023-09-28T14:22:55.377442Z\"\n        },\n        {\n            \"id\": 4,\n            \"order\": 3,\n            \"product\": 1,\n            \"quantity\": 1,\n            \"created_at\": \"2023-09-28T14:22:55.374562Z\",\n            \"updated_at\": \"2023-09-28T14:22:55.374571Z\"\n        }\n    ],\n    \"created_at\": \"2023-09-28T14:22:55.371931Z\",\n    \"updated_at\": \"2023-09-28T14:22:55.371941Z\",\n    \"use_new_address\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "change order status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"C\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_endpoint}}/order/update-status/1/",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"order",
+								"update-status",
+								"1",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"order_id\": 3,\n    \"status\": \"D\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/order/update-status/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"order",
+										"update-status",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 14:24:41 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "PATCH, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "14"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"D\"\n}"
+						},
+						{
+							"name": "400",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"order_id\": 3,\n    \"status\": \"D\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_endpoint}}/order/update-status/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"order",
+										"update-status",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 14:24:52 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "PATCH, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "72"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"non_field_errors\": [\n        \"Order is delivered, you can't change the status\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Orders list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4NTAyNzkwLCJpYXQiOjE2OTU5MTA3OTAsImp0aSI6ImY4NGE3YmVjNzZjMjQ2ZDE5Y2JiMjU5YjQwNzlhOTVlIiwidXNlcl9pZCI6IjMxYTYxMmEyLWY1NjUtNGRmNS1hY2Q0LTJkZTk3MmI5MzZhYyJ9.kEOZw0wHPOj0Yo4Hyf1HgHZlHEq0QKPob57F2s-2dEM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_endpoint}}/order/all/",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"order",
+								"all",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_endpoint}}/order/all/",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"order",
+										"all",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 14:25:52 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "516"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"count\": 3,\n    \"next\": null,\n    \"previous\": null,\n    \"results\": [\n        {\n            \"id\": 3,\n            \"status\": \"D\",\n            \"created_at\": \"2023-09-28T14:22:55.371931Z\",\n            \"updated_at\": \"2023-09-28T14:24:41.132106Z\",\n            \"buyer\": \"31a612a2-f565-4df5-acd4-2de972b936ac\"\n        },\n        {\n            \"id\": 2,\n            \"status\": \"P\",\n            \"created_at\": \"2023-09-11T08:10:08.389764Z\",\n            \"updated_at\": \"2023-09-11T08:10:08.389774Z\",\n            \"buyer\": \"bfcece9f-1e43-42f4-947d-1450fd61a18a\"\n        },\n        {\n            \"id\": 1,\n            \"status\": \"C\",\n            \"created_at\": \"2023-09-11T08:09:21.121391Z\",\n            \"updated_at\": \"2023-09-11T08:15:52.807292Z\",\n            \"buyer\": \"bfcece9f-1e43-42f4-947d-1450fd61a18a\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4NTAyNzkwLCJpYXQiOjE2OTU5MTA3OTAsImp0aSI6ImY4NGE3YmVjNzZjMjQ2ZDE5Y2JiMjU5YjQwNzlhOTVlIiwidXNlcl9pZCI6IjMxYTYxMmEyLWY1NjUtNGRmNS1hY2Q0LTJkZTk3MmI5MzZhYyJ9.kEOZw0wHPOj0Yo4Hyf1HgHZlHEq0QKPob57F2s-2dEM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_endpoint}}/order/details/?id=2",
+							"host": [
+								"{{api_endpoint}}"
+							],
+							"path": [
+								"order",
+								"details",
+								""
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_endpoint}}/order/details/?id=3",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"order",
+										"details",
+										""
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 14:27:39 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "619"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"order_items\": [\n        {\n            \"id\": 5,\n            \"order\": 3,\n            \"product\": 2,\n            \"quantity\": 1,\n            \"created_at\": \"2023-09-28T14:22:55.377437Z\",\n            \"updated_at\": \"2023-09-28T14:22:55.377442Z\"\n        },\n        {\n            \"id\": 4,\n            \"order\": 3,\n            \"product\": 1,\n            \"quantity\": 1,\n            \"created_at\": \"2023-09-28T14:22:55.374562Z\",\n            \"updated_at\": \"2023-09-28T14:22:55.374571Z\"\n        }\n    ],\n    \"order_address\": {\n        \"id\": 3,\n        \"city\": \"kyiv\",\n        \"street_address\": \"ar\",\n        \"apartment_address\": \"a\",\n        \"postal_code\": \"a\",\n        \"created_at\": \"2023-09-28T14:22:55.379271Z\",\n        \"updated_at\": \"2023-09-28T14:22:55.379277Z\"\n    },\n    \"status\": \"D\",\n    \"created_at\": \"2023-09-28T14:22:55.371931Z\",\n    \"updated_at\": \"2023-09-28T14:24:41.132106Z\",\n    \"buyer\": \"31a612a2-f565-4df5-acd4-2de972b936ac\"\n}"
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_endpoint}}/order/details/?id=2",
+									"host": [
+										"{{api_endpoint}}"
+									],
+									"path": [
+										"order",
+										"details",
+										""
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Sep 2023 14:28:42 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.11.5"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "23"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"detail\": \"Not found.\"\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
